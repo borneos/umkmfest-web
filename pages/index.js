@@ -1,16 +1,16 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import Layout from '@/components/Layout'
+import Header from "@/components/Header";
+import Layout from "@/components/Layout";
+import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
     <>
       <Layout>
-        <h1 className='py-12 mt-12 md:mt-0'>Tester ygy</h1>
+        <Header type="landing" />
       </Layout>
-      <main
+      {/* <main
         className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
       >
         <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -118,7 +118,7 @@ export default function Home() {
             </p>
           </a>
         </div>
-      </main>
+      </main> */}
     </>
-  )
+  );
 }
