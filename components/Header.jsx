@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export default function Header(props) {
   const { name, pageTitle, type } = props;
   return (
-    <div className="container mx-auto min-h-screen">
+    <div className="container mx-auto">
       <div className="bg-[url('/images/header.png')] bg-center bg-no-repeat bg-cover h-[110px] flex flex-col justify-center px-5">
         {type == "landing" ? (
           <div className="flex gap-3">
