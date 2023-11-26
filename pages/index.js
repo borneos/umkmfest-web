@@ -18,7 +18,7 @@ export default function Home() {
     slidesToShow: 1.1,
     speed: 500,
     arrows: false,
-    dots: true,
+    dots: false,
   };
   return (
     <>
@@ -80,6 +80,7 @@ export default function Home() {
             image="/images/pelatihan-graphic 1 1.png"
             btnLabel="Daftar Pelatihan"
             buttonVariant="secondary"
+            link="/trainings"
           />
           <CardEvent
             title=""
@@ -87,6 +88,7 @@ export default function Home() {
             image="/images/Ticket 1.png"
             btnLabel="Tiket Masuk"
             buttonVariant="primary"
+            link="/tickets"
           />
           <div>
             <p className="font-semibold text-xl text-black">Info Terbaru</p>

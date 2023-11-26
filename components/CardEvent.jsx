@@ -10,10 +10,10 @@ export default function CardEvent(props) {
   return (
     <>
       <div className="p-3 rounded-2xl shadow-md flex justify-between">
-        <div className="flex flex-col justify-center gap-2 text-black">
+        <div className="flex flex-col justify-center gap-2 text-black w-[236px]">
           <p> {title ?? ""} </p>
           <h3 className="font-semibold text-xl">{subTitle ?? ""}</h3>
-          <Link href="">
+          <Link href={link ?? ""}>
             <Button label={btnLabel} type={buttonVariant} />
           </Link>
         </div>
