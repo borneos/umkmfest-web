@@ -1,13 +1,19 @@
 import Image from "next/image";
 import React from "react";
 import PropTypes from "prop-types";
+import Link from "next/link";
+import { HiChevronLeft } from "react-icons/hi";
+import { useRouter } from "next/router";
 
 export default function Header(props) {
   const { name, pageTitle, type } = props;
+  const router = useRouter();
+  console.log("🚀 ~ file: Header.jsx:11 ~ Header ~ router:", router.pathname);
+
   return (
     <div className="container mx-auto">
       <div className="bg-[url('/images/header.png')] bg-center bg-no-repeat bg-cover h-[110px] flex flex-col justify-center px-5">
-        {type == "landing" ? (
+        {router.pathname == "/" ? (
           <div className="flex gap-3">
             <div>
               <Image
@@ -27,8 +33,35 @@ export default function Header(props) {
               <p className="font-medium">Welcome to PKT UMKM Fest 2023</p>
             </div>
           </div>
+        ) : router.pathname == "/tickets" ? (
+          <div className="flex justify-between">
+            <Link href="/">
+              {" "}
+              <HiChevronLeft size={24} />{" "}
+            </Link>
+            <p className="text-center">Tiket Masuk PKT UMKM Fest 2023</p>
+            <div></div>
+          </div>
+        ) : router.pathname == "/trainings" ? (
+          <div className="flex justify-between">
+            <Link href="/">
+              {" "}
+              <HiChevronLeft size={24} />{" "}
+            </Link>
+            <p className="text-center">Daftar Pelatihan</p>
+            <div></div>
+          </div>
+        ) : router.pathname == "/games" ? (
+          <div className="flex justify-between">
+            <Link href="/">
+              {" "}
+              <HiChevronLeft size={24} />{" "}
+            </Link>
+            <p className="text-center">Mission Game</p>
+            <div></div>
+          </div>
         ) : (
-          <p className="text-center">Tiket Masuk PKT UMKM Fest 2023</p>
+          ""
         )}
       </div>
     </div>
