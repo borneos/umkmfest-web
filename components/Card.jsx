@@ -27,7 +27,7 @@ export default function Card(props) {
                       : type == "trainings"
                       ? "/images/education.png"
                       : type == "games"
-                      ? "/images/education.png"
+                      ? "/images/festival.png"
                       : ""
                   }
                   width={50}
