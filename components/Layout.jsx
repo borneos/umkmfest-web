@@ -1,11 +1,13 @@
 import MenuBottom from "./MenuBottom";
 
 export default function Layout(props) {
-  const { children } = props;
+  const { children, hideBottomMenu } = props;
   return (
-    <div className="mx-auto max-w-md bg-white min-h-screen pb-20">
+    <div className={`mx-auto max-w-md bg-white min-h-screen ${!hideBottomMenu && pb-20}`}>
       {children}
-      <MenuBottom />
+      {
+        !hideBottomMenu ? <MenuBottom /> : null
+      }
     </div>
   );
 }
