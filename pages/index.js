@@ -5,11 +5,14 @@ import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import { useEffect } from "react";
 import Slider from "react-slick";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
   const settings = {
     className: "center",
     centerMode: true,
@@ -20,6 +23,10 @@ export default function Home() {
     arrows: false,
     dots: false,
   };
+
+  useEffect(() => {
+    router.push('/countdown');
+  }, [router]);
   return (
     <>
       <Layout>
