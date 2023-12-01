@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import Slider from "react-slick";
 import { useRouter } from "next/router";
+import { pageview } from "@/public/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function Home() {
 
   useEffect(() => {
     router.push('/countdown');
+    pageview(window.location.pathname);
   }, [router]);
   return (
     <>
