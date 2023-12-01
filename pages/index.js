@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import Slider from "react-slick";
 import { useRouter } from "next/router";
+import Modal from "@/components/Modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,9 @@ export default function Home() {
     dots: false,
   };
 
-  useEffect(() => {
-    router.push('/countdown');
-  }, [router]);
+  // useEffect(() => {
+  //   router.push('/countdown');
+  // }, [router]);
   return (
     <>
       <Layout>
