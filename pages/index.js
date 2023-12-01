@@ -1,33 +1,34 @@
-import CardBlog from "@/components/CardBlog";
-import CardEvent from "@/components/CardEvent";
-import CarouselBanner from "@/components/CarouselBanner";
-import Header from "@/components/Header";
-import Layout from "@/components/Layout";
-import { Inter } from "next/font/google";
-import Image from "next/image";
-import { useEffect } from "react";
-import Slider from "react-slick";
-import { useRouter } from "next/router";
-import Modal from "@/components/Modal";
+import CardBlog from '@/components/CardBlog';
+import CardEvent from '@/components/CardEvent';
+import CarouselBanner from '@/components/CarouselBanner';
+import Header from '@/components/Header';
+import Layout from '@/components/Layout';
+import { Inter } from 'next/font/google';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import Slider from 'react-slick';
+import { useRouter } from 'next/router';
+import { pageview } from '@/public/gtag';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const router = useRouter();
   const settings = {
-    className: "center",
+    className: 'center',
     centerMode: true,
     infinite: false,
-    centerPadding: "8px",
+    centerPadding: '8px',
     slidesToShow: 1.1,
     speed: 500,
     arrows: false,
     dots: false,
   };
 
-  // useEffect(() => {
-  //   router.push('/countdown');
-  // }, [router]);
+  useEffect(() => {
+    router.push('/countdown');
+    pageview(window.location.pathname);
+  }, [router]);
   return (
     <>
       <Layout>
