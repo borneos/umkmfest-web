@@ -25,10 +25,10 @@ export default function Home() {
     dots: false,
   };
 
-  useEffect(() => {
-    router.push('/countdown');
-    pageview(window.location.pathname);
-  }, [router]);
+  // useEffect(() => {
+  //   router.push('/countdown');
+  //   pageview(window.location.pathname);
+  // }, [router]);
   return (
     <>
       <Layout>
