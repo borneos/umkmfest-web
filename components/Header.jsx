@@ -46,13 +46,14 @@ export default function Header(props) {
             <p className="text-center">Daftar Pelatihan</p>
             <div></div>
           </div>
-        ) : router.pathname == "/games" ? (
+        ) : router.pathname == "/games" ||
+          router.pathname == "/games/[slug]" ? (
           <div className="flex justify-between">
             <Link href="/">
               {" "}
               <HiChevronLeft size={24} />{" "}
             </Link>
-            <p className="text-center">Mission Game</p>
+            <p className="text-center">Mission Game {pageTitle ?? ""}</p>
             <div></div>
           </div>
         ) : (

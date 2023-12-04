@@ -13,7 +13,7 @@ import { pageview } from "@/public/gtag";
 import ENV from "@/constant/env";
 import { STATUS } from "@/constant/status";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const router = useRouter();
@@ -21,10 +21,10 @@ export default function Home() {
   const [dataBlog, setDataBlog] = useState([]);
 
   const settings = {
-    className: "center",
+    className: 'center',
     centerMode: true,
     infinite: false,
-    centerPadding: "8px",
+    centerPadding: '8px',
     slidesToShow: 1.1,
     speed: 500,
     arrows: false,

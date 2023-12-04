@@ -10,9 +10,11 @@ export default function Card(props) {
       <Link
         href={
           type == "tickets"
-            ? "/tickets/slug"
+            ? `/tickets/${link}`
             : type == "trainings"
-            ? "/trainings/slug"
+            ? `/trainings/${link}`
+            : type == "games"
+            ? `games/${link}`
             : ""
         }
       >

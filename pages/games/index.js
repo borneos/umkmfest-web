@@ -22,6 +22,7 @@ export default function Games() {
             type="games"
             title="Mission Game Day 1"
             description="Jumat, 8 Desember 2023"
+            link="game-day-1"
           />
         </div>
       </Layout>
