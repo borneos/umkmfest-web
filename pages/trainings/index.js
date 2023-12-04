@@ -3,8 +3,30 @@ import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import React from "react";
 import { HiInformationCircle } from "react-icons/hi";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import ENV from "@/constant/env";
 
 export default function Trainings() {
+  const [dataEvents, setDataEvents] = useState([]);
+  console.log("🚀 ~ file: index.js:12 ~ Trainings ~ dataEvents:", dataEvents)
+  const fetchEvents = async () => {
+    await axios.get(`${ENV.API}events?category=training&sort=asc`)
+    .then((response) => {
+      if(response.status === 200) {
+        setDataEvents(response?.data?.data);
+      }
+    })
+    .catch((error) => {
+      console.error(error, 'Login failed');
+      return;
+    })
+  }
+
+  useEffect(() => {
+    fetchEvents();
+  }, [])
+
   return (
     <>
       <Layout>

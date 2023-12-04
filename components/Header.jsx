@@ -12,7 +12,7 @@ export default function Header(props) {
 
   return (
     <div className="container mx-auto">
-      <div className="bg-[url('https://res.cloudinary.com/borneos-co/image/upload/v1701670519/pktbeedufest/asset/header-website_ppt3xm.webp')] bg-contain bg-no-repeat bg-cover h-[110px] flex flex-col justify-center px-5">
+      <div className="bg-[url('https://res.cloudinary.com/borneos-co/image/upload/v1701670519/pktbeedufest/asset/header-website_ppt3xm.webp')] bg-contain bg-no-repeat h-[110px] flex flex-col justify-center px-5">
         {router.pathname == "/" ? (
           <div className="flex gap-3">
             <Image

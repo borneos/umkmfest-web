@@ -1,10 +1,39 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 import Image from 'next/image';
+import useToast from '@/hooks/useToast';
+import { parse } from 'cookie';
+import ENV from '@/constant/env';
+import Cookies from 'js-cookie';
 
-export default function Profile() {
+function Profile(props) {
+  const { query, cookies, dataUser } = props;
+  const tokenServer = query?.token;
+  const token = cookies?.borneos || Cookies.get(ENV.TOKEN_NAME);
+  const router = useRouter();
+  console.log('🚀 ~ file: index.js:16 ~ Profile ~ token:', token);
+  const [data, setData] = useState(dataUser || {});
+
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    // Check if any token cookies in device
+    if (!token) {
+      if (query?.origin) {
+        router.push({
+          pathname: `${ENV.URL_SSO}/login`,
+          query: {
+            origin: `${ENV.URL}/profile`,
+          },
+        });
+      }
+    }
+  }, []);
+
   return (
     <>
       <Layout>
@@ -68,3 +97,35 @@ export default function Profile() {
     </>
   );
 }
+
+Profile.getInitialProps = async (props) => {
+  const { query, req } = props;
+  const cookies = req?.headers?.cookie || '';
+  const parsedCookies = cookies ? parse(cookies) : '';
+  try {
+    const headers = {
+      Authorization: `Bearer ${parsedCookies?.borneos}`,
+    };
+    const params = {
+      origin: query?.origin,
+    };
+    const response = await axios.get(`${ENV.API}validation`, {
+      headers,
+      params,
+    });
+    const data = response.data.data;
+    return {
+      query,
+      cookies: parsedCookies,
+      dataUser: data,
+    };
+  } catch (error) {
+    return {
+      query,
+      cookies: parsedCookies,
+      err: error,
+    };
+  }
+};
+
+export default Profile;
