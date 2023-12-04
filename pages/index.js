@@ -143,7 +143,9 @@ export default function Home() {
             </div>
             <Slider {...settings}>
               {dataBlog.map(item => 
-                <CardBlog />
+                <div key={item.id}>
+                  <CardBlog />
+                </div>
               )}
             </Slider>
           </div>
