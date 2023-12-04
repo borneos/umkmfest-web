@@ -2,17 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default function Button(props) {
-  const { label, type } = props;
+  const { label, type, onClick } = props;
 
   if (type === "primary") {
     return (
-      <button className="bg-[#049548] py-1 rounded-lg w-full text-white h-8">
+      <button className="btn btn-sm bg-[#1996a4] text-white hover:border-[#70CBCF] hover:text-[#183538] hover:bg-[#70CBCF] w-full h-10">
         {label}
       </button>
     );
   } else if (type === "secondary") {
     return (
-      <button className="border-2 border-[#049548] text-[#049548] py-1 rounded-lg w-full h-8">
+      <button className="btn btn-sm btn-outline text-[#1996a4] border-[#1996a4] hover:bg-[#1996a4] hover:border-[#1996a4] w-full h-10">
         {label}
       </button>
     );

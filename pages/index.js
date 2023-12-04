@@ -1,3 +1,6 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import CardBlog from "@/components/CardBlog";
 import CardEvent from "@/components/CardEvent";
 import CarouselBanner from "@/components/CarouselBanner";
@@ -5,15 +8,18 @@ import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { Inter } from "next/font/google";
 import Image from "next/image";
-import { useEffect } from "react";
 import Slider from "react-slick";
-import { useRouter } from "next/router";
 import { pageview } from "@/public/gtag";
+import ENV from "@/constant/env";
+import { STATUS } from "@/constant/status";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
+  const [dataBanner, setDataBanner] = useState([]);
+  const [dataBlog, setDataBlog] = useState([]);
+
   const settings = {
     className: "center",
     centerMode: true,
@@ -25,15 +31,46 @@ export default function Home() {
     dots: false,
   };
 
+  const fetchBanner = async () => {
+    await axios.get(`${ENV.API}banners`)
+    .then((response) => {
+      if(response.status === STATUS.SUCCESS) {
+        setDataBanner(response?.data?.data);
+      }
+    })
+    .catch((error) => {
+      console.error(error, 'Login failed');
+      return;
+    })
+  }
+
+  const fetchBlog = async () => {
+    await axios.get(`${ENV.API}blogs`)
+    .then((response) => {
+      if(response.status === STATUS.SUCCESS) {
+        setDataBlog(response?.data?.data);
+      }
+    })
+    .catch((error) => {
+      console.error(error, 'Login failed');
+      return;
+    })
+  }
+
   useEffect(() => {
-    router.push('/countdown');
-    pageview(window.location.pathname);
-  }, [router]);
+    fetchBanner();
+    fetchBlog();
+  }, [])
+
+  // useEffect(() => {
+  //   router.push('/countdown');
+  //   pageview(window.location.pathname);
+  // }, [router]);
   return (
     <>
       <Layout>
         <Header type="landing" />
-        <CarouselBanner />
+        <CarouselBanner data={dataBanner} />
         <div className="container mx-auto px-4 flex flex-col gap-5 mt-[40px]">
           <div className="flex gap-1">
             <div className="text-black flex flex-col justify-center items-center text-center gap-1">
@@ -100,10 +137,14 @@ export default function Home() {
             link="/tickets"
           />
           <div>
-            <p className="font-semibold text-xl text-black">Info Terbaru</p>
+            <div className="flex justify-between items-center justify-items-center">
+                <h2 className="font-semibold text-xl text-black">Info Terbaru</h2>
+                <span className="text-sm">Info Lainnya</span>
+            </div>
             <Slider {...settings}>
-              <CardBlog />
-              <CardBlog />
+              {dataBlog.map(item => 
+                <CardBlog />
+              )}
             </Slider>
           </div>
         </div>

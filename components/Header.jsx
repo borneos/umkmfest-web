@@ -8,28 +8,24 @@ import { useRouter } from "next/router";
 export default function Header(props) {
   const { name, pageTitle, type } = props;
   const router = useRouter();
+  const imageHeader = 'https://res.cloudinary.com/borneos-co/image/upload/v1701670519/pktbeedufest/asset/header-website_ppt3xm.webp';
 
   return (
     <div className="container mx-auto">
-      <div className="bg-[url('/images/header.png')] bg-center bg-no-repeat bg-cover h-[110px] flex flex-col justify-center px-5">
+      <div className="bg-[url('https://res.cloudinary.com/borneos-co/image/upload/v1701670519/pktbeedufest/asset/header-website_ppt3xm.webp')] bg-contain bg-no-repeat bg-cover h-[110px] flex flex-col justify-center px-5">
         {router.pathname == "/" ? (
           <div className="flex gap-3">
-            <div>
-              <Image
-                src="/images/profil.png"
-                alt="Profil"
-                width={55}
-                height={55}
-                style={{
-                  borderRadius: "50%",
-                }}
-              />
-            </div>
+            <Image
+              src="https://res.cloudinary.com/borneos-co/image/upload/v1701671428/pktbeedufest/asset/logo_umkmfest-fix_a6l8ur.webp"
+              alt="Profil"
+              width={80}
+              height={80}
+            />
             <div className="flex flex-col justify-center">
-              <p className="text-white font-bold text-size-7">
+              {/* <p className="text-white font-bold text-size-7">
                 Hi, {name ?? "Your Name"}
-              </p>
-              <p className="font-medium">Welcome to PKT UMKM Fest 2023</p>
+              </p> */}
+              <p className="font-medium text-gray-500">Welcome to PKT UMKM Fest 2023</p>
             </div>
           </div>
         ) : router.pathname == "/tickets" ? (
