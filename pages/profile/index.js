@@ -1,8 +1,8 @@
-import Button from "@/components/Button";
-import Card from "@/components/Card";
-import Header from "@/components/Header";
-import Layout from "@/components/Layout";
-import Image from "next/image";
+import Button from '@/components/Button';
+import Card from '@/components/Card';
+import Header from '@/components/Header';
+import Layout from '@/components/Layout';
+import Image from 'next/image';
 
 export default function Profile() {
   return (
@@ -62,7 +62,7 @@ export default function Profile() {
             </div>
             <div className="divider"></div>
           </div>
-          <Button type="secondary" label="Keluar" />
+          <Button variant="secondary" label="Keluar" />
         </div>
       </Layout>
     </>
