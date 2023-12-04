@@ -6,7 +6,7 @@ export default function Button(props) {
 
   if (type === "primary") {
     return (
-      <button className="btn btn-sm bg-[#1996a4] text-white hover:border-[#70CBCF] hover:text-[#183538] hover:bg-[#70CBCF] w-full h-10">
+      <button className="btn btn-sm bg-[#1996a4] border-[#1996a4] text-white hover:border-[#70CBCF] hover:text-[#183538] hover:bg-[#70CBCF] w-full h-10">
         {label}
       </button>
     );
