@@ -55,12 +55,15 @@ export default function Games(props) {
       fetchUser(clientRenderCookie);
     }else{
       if(!dataUser){
-        router.push({
-          pathname: `${ENV.URL_SSO}/login`,
-          query: {
-            origin: `${ENV.URL}/games`
-          }
-        }) 
+        setTimeout(() => {
+          router.push({
+            pathname: `${ENV.URL_SSO}/login`,
+            query: {
+              origin: `${ENV.URL}/games`
+            },
+            asPath: ''
+          }) 
+        },500)
       }
     }
     // Check if bring token server

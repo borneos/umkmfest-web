@@ -77,12 +77,14 @@ export default function Trainings(props) {
       fetchUser(clientRenderCookie);
     } else {
       if (!dataUser) {
-        router.push({
-          pathname: `${ENV.URL_SSO}/login`,
-          query: {
-            origin: `${ENV.URL}/trainings`
-          }
-        }) 
+        setTimeout(() => {
+          router.push({
+            pathname: `${ENV.URL_SSO}/login`,
+            query: {
+              origin: `${ENV.URL}/trainings`
+            }
+          }) 
+        },500)
       }
     }
     // Check if bring token server

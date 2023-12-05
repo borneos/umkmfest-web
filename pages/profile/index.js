@@ -84,12 +84,14 @@ function Profile(props) {
       fetchUser(clientRenderCookie);
     } else {
       if (!dataUser) {
-        router.push({
-          pathname: `${ENV.URL_SSO}/login`,
-          query: {
-            origin: `${ENV.URL}/profile`,
-          },
-        });
+        setTimeout(() => {
+          router.push({
+            pathname: `${ENV.URL_SSO}/login`,
+            query: {
+              origin: `${ENV.URL}/profile`,
+            },
+          });
+        },500)
       }
     }
     // Check if bring token server
