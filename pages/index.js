@@ -19,7 +19,6 @@ export default function Home() {
   const router = useRouter();
   const [dataBanner, setDataBanner] = useState([]);
   const [dataBlog, setDataBlog] = useState([]);
-  console.log("🚀 ~ file: index.js:22 ~ Home ~ dataBlog:", dataBlog)
 
   const settings = {
     className: 'center',

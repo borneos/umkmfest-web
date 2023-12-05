@@ -18,15 +18,12 @@ function Profile(props) {
   const token = cookies?.borneos;
   const router = useRouter();
   const [data, setData] = useState(dataUser || {});
-  console.log("🚀 ~ file: index.js:21 ~ Profile ~ data:", data)
-  console.log('Linknya' ,router.pathname)
 
   const { showToast } = useToast();
 
   const fetchDestroy = async () => {
     await Cookies.remove(token);
     setTimeout(() => {
-      console.log("====Fetch Distroy")
       router.push({
         pathname: `${ENV.URL_SSO}`,
         query: {
