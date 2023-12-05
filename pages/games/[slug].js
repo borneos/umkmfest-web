@@ -1,12 +1,12 @@
-import Button from "@/components/Button";
-import Header from "@/components/Header";
-import Layout from "@/components/Layout";
-import { useRouter } from "next/router";
-import { HiInformationCircle } from "react-icons/hi";
+import Button from '@/components/Button';
+import Header from '@/components/Header';
+import Layout from '@/components/Layout';
+import { useRouter } from 'next/router';
+import { HiInformationCircle } from 'react-icons/hi';
 
 export default function Game() {
   const router = useRouter();
-  console.log("🚀 ~ file: [slug].js:7 ~ Game ~ router:", router.pathname);
+  console.log('🚀 ~ file: [slug].js:7 ~ Game ~ router:', router.pathname);
 
   return (
     <>
@@ -93,7 +93,7 @@ export default function Game() {
                     className="w-16 h-16 rounded-md bg-white border-2 border-gray-200 text-center"
                   />
                 </div>
-                <Button type="primary" label="Submit" />
+                <Button variant="primary" label="Submit" />
               </form>
             </div>
           </div>

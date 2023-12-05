@@ -1,14 +1,14 @@
-import Image from "next/image";
-import React from "react";
-import Slider from "react-slick";
+import Image from 'next/image';
+import React from 'react';
+import Slider from 'react-slick';
 
 export default function CarouselBanner(props) {
   const { data } = props;
   const settings = {
-    className: "center",
+    className: 'center',
     centerMode: true,
     infinite: false,
-    centerPadding: "8px",
+    centerPadding: '8px',
     slidesToShow: 1.1,
     speed: 500,
     arrows: false,
@@ -20,8 +20,8 @@ export default function CarouselBanner(props) {
   return (
     <div className="my-5">
       <Slider {...settings}>
-        {data.map((item, id) => 
-          <div key={id} className="px-1">
+        {data.map((item) => (
+          <div className="px-2">
             <Image
               src={item.image}
               className="rounded-box"
@@ -30,7 +30,7 @@ export default function CarouselBanner(props) {
               height={145}
             />
           </div>
-        )}
+        ))}
       </Slider>
     </div>
   );

@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Image from "next/image";
-import Link from "next/link";
-import Button from "./Button";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Image from 'next/image';
+import Link from 'next/link';
+import Button from './Button';
 
 export default function CardEvent(props) {
   const { title, subTitle, image, buttonVariant, buttonColor, link, btnLabel } =
@@ -11,14 +11,14 @@ export default function CardEvent(props) {
     <>
       <div className="p-3 rounded-2xl shadow-md flex justify-between">
         <div className="flex flex-col justify-center gap-2 text-black w-[236px]">
-          <p> {title ?? ""} </p>
-          <h3 className="font-semibold text-xl">{subTitle ?? ""}</h3>
-          <Link href={link ?? ""}>
-            <Button label={btnLabel} type={buttonVariant} />
+          <p> {title ?? ''} </p>
+          <h3 className="font-semibold text-xl">{subTitle ?? ''}</h3>
+          <Link href={link ?? ''}>
+            <Button variant={buttonVariant}> {btnLabel} </Button>
           </Link>
         </div>
         <div className="flex flex-col justify-center">
-          <Image src={image ?? ""} alt="Event" width={100} height={100} />
+          <Image src={image ?? ''} alt="Event" width={100} height={100} />
         </div>
       </div>
     </>

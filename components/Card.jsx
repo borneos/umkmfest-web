@@ -1,21 +1,29 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { HiChevronRight } from "react-icons/hi";
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import { HiChevronRight } from 'react-icons/hi';
 
 export default function Card(props) {
   const { image, title, description, type, link, status, disabled } = props;
+
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
   return (
     <>
       <Link
         href={
-          type == "tickets"
+          type == 'ticket'
             ? `/tickets/${link}`
-            : type == "trainings"
+            : type == 'training'
             ? `/trainings/${link}`
-            : type == "games"
+            : type == 'game'
             ? `games/${link}`
-            : ""
+            : ''
         }
       >
         <div className="shadow-md rounded-md p-[15px] text-black">
@@ -24,13 +32,13 @@ export default function Card(props) {
               <div>
                 <Image
                   src={
-                    type == "tickets"
-                      ? "/images/Ticket 1.png"
-                      : type == "trainings"
-                      ? "/images/education.png"
-                      : type == "games"
-                      ? "/images/festival.png"
-                      : ""
+                    type == 'ticket'
+                      ? '/images/Ticket 1.png'
+                      : type == 'training'
+                      ? '/images/education.png'
+                      : type == 'game'
+                      ? '/images/festival.png'
+                      : ''
                   }
                   width={50}
                   height={50}
@@ -38,8 +46,14 @@ export default function Card(props) {
                 />
               </div>
               <div>
-                <p className="font-semibold"> {title ?? ""} </p>
-                <p className="text-xs text-gray-400"> {description ?? ""} </p>
+                <p className="font-semibold"> {title ?? ''} </p>
+                <p className="text-xs text-gray-400">
+                  {' '}
+                  {new Date(description).toLocaleDateString(
+                    'id-ID',
+                    options,
+                  )}{' '}
+                </p>
               </div>
             </div>
             <div>

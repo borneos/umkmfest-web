@@ -34,35 +34,37 @@ export default function Home() {
   };
 
   const fetchBanner = async () => {
-    await axios.get(`${ENV.API}banners`)
-    .then((response) => {
-      if(response.status === STATUS.SUCCESS) {
-        setDataBanner(response?.data?.data);
-      }
-    })
-    .catch((error) => {
-      console.error(error, 'Login failed');
-      return;
-    })
-  }
+    await axios
+      .get(`${ENV.API}banners`)
+      .then((response) => {
+        if (response?.status === STATUS.SUCCESS) {
+          setDataBanner(response?.data?.data);
+        }
+      })
+      .catch((error) => {
+        console.error(error, 'Login failed');
+        return;
+      });
+  };
 
   const fetchBlog = async () => {
-    await axios.get(`${ENV.API}blogs`)
-    .then((response) => {
-      if(response.status === STATUS.SUCCESS) {
-        setDataBlog(response?.data?.data);
-      }
-    })
-    .catch((error) => {
-      console.error(error, 'Login failed');
-      return;
-    })
-  }
+    await axios
+      .get(`${ENV.API}blogs`)
+      .then((response) => {
+        if (response?.status === STATUS.SUCCESS) {
+          setDataBlog(response?.data?.data);
+        }
+      })
+      .catch((error) => {
+        console.error(error, 'Login failed');
+        return;
+      });
+  };
 
   useEffect(() => {
     fetchBanner();
     fetchBlog();
-  }, [])
+  }, []);
 
   // useEffect(() => {
   //   router.push('/countdown');
@@ -153,15 +155,15 @@ export default function Home() {
           />
           {/* <div>
             <div className="flex justify-between items-center justify-items-center">
-                <h2 className="font-semibold text-xl text-black">Info Terbaru</h2>
-                <span className="text-sm">Info Lainnya</span>
+              <h2 className="font-semibold text-xl text-black">Info Terbaru</h2>
+              <span className="text-sm">Info Lainnya</span>
             </div>
             <Slider {...settings}>
-              {dataBlog.map(item => 
+              {dataBlog.splice(0, 3).map((item) => (
                 <div key={item.id}>
                   <CardBlog data={item} />
                 </div>
-              )}
+              ))}
             </Slider>
           </div> */}
         </div>
