@@ -8,6 +8,8 @@ import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { HiInformationCircle } from "react-icons/hi";
+import HeadMain from "@/components/HeadMain";
+const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1677317038/images/campign_o76pi8.jpg'
 
 export default function Trainings(props) {
   const { query, cookies, dataUser } = props;
@@ -75,7 +77,7 @@ export default function Trainings(props) {
         router.push({
           pathname: `${ENV.URL_SSO}/login`,
           query: {
-            origin: `${ENV.URL}/profile`
+            origin: `${ENV.URL}/trainings`
           }
         }) 
       }
@@ -92,6 +94,19 @@ export default function Trainings(props) {
 
   return (
     <>
+      <HeadMain
+        title="Pelatihan - PKT UMKM Festival 2023"
+        description="Pelatihan - Pupuk Kaltim UMKM Festival 2023"
+        keyword="pelatihan, pemberdayaan, umkm, festival, pkt, pupuk kaltim"
+        ogTitle="Pelatihan - PKT UMKM Festival 2023"
+        ogDescription="PKT UMKM Festival 2023."
+        ogImageUrl={OG_IMAGE}
+        ogImageAlt="Pelatihan- PKT UMKM Festival 2023"
+        ogImageType="image/jpg"
+        ogImageHeight="461"
+        ogImageWidth="561"
+        ogUrl="https://pktumkmfestival.com/trainings"
+      />
       <Layout>
         <Header />
         <div className="container mx-auto px-4 flex flex-col gap-3">

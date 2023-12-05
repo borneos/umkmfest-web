@@ -22,7 +22,7 @@ export default function Games(props) {
       router.push({
         pathname: `${ENV.URL_SSO}`,
         query: {
-          origin: `${ENV.URL}/profile`
+          origin: `${ENV.URL}/games`
         }
       })
     }, 1000)
@@ -47,24 +47,6 @@ export default function Games(props) {
     })
   }
 
-  const handleLogout = async () => {
-    const clientCookie = Cookies.get(ENV.TOKEN_NAME)
-    axios.defaults.headers.common['Authorization'] = `Bearer ${clientCookie || token}`
-    await axios.post(`${ENV.API_SSO}logout`)
-    .then((response) => {
-      if(response.status === 200) {
-        Cookies.remove(ENV.TOKEN_NAME);
-        useToast(STATUS_TOAST.SUCCESS, 'Berhasil Keluar')
-        router.push('/')
-      }
-    })
-    .catch((error) => {
-      fetchDestroy();
-      console.error(error, 'Login failed');
-      return;
-    })
-  }
-
   // Checking validation user
   useEffect(() => {
     // Check if any token cookies in client render
@@ -76,7 +58,7 @@ export default function Games(props) {
         router.push({
           pathname: `${ENV.URL_SSO}/login`,
           query: {
-            origin: `${ENV.URL}/profile`
+            origin: `${ENV.URL}/games`
           }
         }) 
       }

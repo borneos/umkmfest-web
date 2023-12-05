@@ -12,6 +12,8 @@ import Slider from "react-slick";
 import { pageview } from "@/public/gtag";
 import ENV from "@/constant/env";
 import { STATUS } from "@/constant/status";
+import HeadMain from "@/components/HeadMain";
+const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1677317038/images/campign_o76pi8.jpg'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -68,6 +70,19 @@ export default function Home() {
   // }, [router]);
   return (
     <>
+      <HeadMain
+        title="PKT UMKM Festival 2023"
+        description="Pupuk Kaltim UMKM Festival 2023"
+        keyword="umkm, festival, pkt, pupuk kaltim"
+        ogTitle="PKT UMKM Festival 2023"
+        ogDescription="PKT UMKM Festival 2023."
+        ogImageUrl={OG_IMAGE}
+        ogImageAlt="PKT UMKM Festival 2023"
+        ogImageType="image/jpg"
+        ogImageHeight="461"
+        ogImageWidth="561"
+        ogUrl="https://pktumkmfestival.com"
+      />
       <Layout>
         <Header type="landing" />
         <CarouselBanner data={dataBanner} />
