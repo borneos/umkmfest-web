@@ -138,7 +138,7 @@ export default function Home() {
             buttonVariant="primary"
             link="/tickets"
           />
-          <div>
+          {/* <div>
             <div className="flex justify-between items-center justify-items-center">
               <h2 className="font-semibold text-xl text-black">Info Terbaru</h2>
               <span className="text-sm">Info Lainnya</span>
@@ -146,12 +146,11 @@ export default function Home() {
             <Slider {...settings}>
               {dataBlog.splice(0, 3).map((item) => (
                 <div key={item.id}>
-                  {/* <CardBlog data={item} key={item.id} /> */}
-                  <p> {item?.name} </p>
+                  <CardBlog data={item} />
                 </div>
               ))}
             </Slider>
-          </div>
+          </div> */}
         </div>
       </Layout>
     </>

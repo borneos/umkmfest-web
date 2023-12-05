@@ -43,27 +43,6 @@ export default function MenuBottom(props) {
             </div>
           </Link>
         )}
-        
-        {/* <Link href="/games">
-          <div
-            className={`flex flex-col gap-2 items-center ${
-              router.pathname == "/games" ? `text-green-700` : `text-black`
-            }`}
-          >
-            <TbDeviceGamepad2 size={24} />
-            <p>Game</p>
-          </div>
-        </Link>
-        <Link href="/profile">
-          <div
-            className={`flex flex-col gap-2 items-center ${
-              router.pathname == "/profile" ? `text-green-700` : `text-black`
-            }`}
-          >
-            <HiOutlineUser size={24} />
-            <p>Profil</p>
-          </div>
-        </Link> */}
       </div>
     </div>
   );

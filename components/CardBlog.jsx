@@ -2,9 +2,29 @@ import Image from 'next/image';
 import PropTypes from 'prop-types';
 
 export default function CardBlog(props) {
-  const { title, image, link, data } = props;
-  console.log('🚀 ~ file: CardBlog.jsx:9 ~ CardBlog ~ props:', props);
-  console.log('🚀 ~ file: CardBlog.jsx:8 ~ CardBlog ~ data:', data);
+  const { data, title, image, link } = props;
+
+  function timeElapsedString(createdAt) {
+    const currentDate = new Date();
+    const postDate = new Date(createdAt);
+
+    const timeDifference = currentDate - postDate;
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else if (minutes > 0) {
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    } else {
+      return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+    }
+  }
 
   return (
     <>
@@ -22,8 +42,10 @@ export default function CardBlog(props) {
             // })}
             src={data.image}
           />
-          <p className="font-semibold text-base text-black">{data?.name}</p>
-          <p className="text-xs text-gray-400">14 jam yang lalu</p>
+          <p className="font-semibold text-base text-black">{data.name}</p>
+          <p className="text-xs text-gray-400">
+            {timeElapsedString(data.createdAt)}
+          </p>
         </div>
       </div>
     </>

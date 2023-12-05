@@ -13,6 +13,8 @@ export default function CarouselBanner(props) {
     speed: 500,
     arrows: false,
     dots: true,
+    autoPlay: true,
+    autoplaySpeed: 2000,
   };
 
   return (
@@ -30,27 +32,6 @@ export default function CarouselBanner(props) {
           </div>
         ))}
       </Slider>
-
-      {/* <div className="carousel carousel-center max-w-lg p-4 space-x-4 rounded-box">
-        <div className="carousel-item">
-          <Image
-            src="/images/banner-1.png"
-            className="rounded-box"
-            alt="banner-1"
-            width={440}
-            height={145}
-          />
-        </div>
-        <div className="carousel-item">
-          <Image
-            src="/images/banner-1.png"
-            className="rounded-box"
-            alt="banner-1"
-            width={440}
-            height={145}
-          />
-        </div>
-      </div> */}
     </div>
   );
 }
