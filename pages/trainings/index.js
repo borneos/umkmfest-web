@@ -40,11 +40,11 @@ export default function Trainings() {
               dan <span className="font-bold"> Waktu </span> Pelatihan.
             </p>
           </div>
-          <Card
+          {/* <Card
             type="trainings"
             title="Pelatihan Menjahit"
             description="Jumat, 8 Desember 2023"
-          />
+          /> */}
         </div>
       </Layout>
     </>

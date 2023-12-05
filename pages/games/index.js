@@ -13,6 +13,14 @@ export default function Games() {
           <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">
             <HiInformationCircle size={18} color="#F2994A" />
             <p className="text-xs">
+              Halo <span className="font-bold"></span>
+              <span className="font-bold">Mission Games </span>{" "}
+              PKTUMKMFEST 2023, Segera dimulai Nantikan
+            </p>
+          </div>
+          {/* <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">
+            <HiInformationCircle size={18} color="#F2994A" />
+            <p className="text-xs">
               Halo <span className="font-bold">Agung</span>, yuk{" "}
               <span className="font-bold"> Mulai Mission Games </span>{" "}
               PKTUMKMFEST 2023
@@ -23,7 +31,7 @@ export default function Games() {
             title="Mission Game Day 1"
             description="Jumat, 8 Desember 2023"
             link="game-day-1"
-          />
+          /> */}
         </div>
       </Layout>
     </>
