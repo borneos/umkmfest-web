@@ -23,7 +23,8 @@ export default function Games(props) {
         pathname: `${ENV.URL_SSO}`,
         query: {
           origin: `${ENV.URL}/games`
-        }
+        },
+        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/games`
       })
     }, 1000)
   }
@@ -55,15 +56,13 @@ export default function Games(props) {
       fetchUser(clientRenderCookie);
     }else{
       if(!dataUser){
-        setTimeout(() => {
-          router.push({
-            pathname: `${ENV.URL_SSO}/login`,
-            query: {
-              origin: `${ENV.URL}/games`
-            },
-            asPath: ''
-          }) 
-        },500)
+        router.push({
+          pathname: `${ENV.URL_SSO}/login`,
+          query: {
+            origin: `${ENV.URL}/games`
+          },
+          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/games`
+        }) 
       }
     }
     // Check if bring token server

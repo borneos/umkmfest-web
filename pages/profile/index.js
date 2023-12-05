@@ -29,6 +29,7 @@ function Profile(props) {
         query: {
           origin: `${ENV.URL}/profile`,
         },
+        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
       });
     }, 1000);
   };
@@ -84,14 +85,13 @@ function Profile(props) {
       fetchUser(clientRenderCookie);
     } else {
       if (!dataUser) {
-        setTimeout(() => {
-          router.push({
-            pathname: `${ENV.URL_SSO}/login`,
-            query: {
-              origin: `${ENV.URL}/profile`,
-            },
-          });
-        },500)
+        router.push({
+          pathname: `${ENV.URL_SSO}/login`,
+          query: {
+            origin: `${ENV.URL}/profile`,
+          },
+          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
+        });
       }
     }
     // Check if bring token server
@@ -111,9 +111,9 @@ function Profile(props) {
         <div className="flex flex-col gap-6 container mx-auto px-4">
           <div className="flex flex-col items-center justify-center text-black gap-2 mt-[-70px]">
             <Image
-              src="/images/profil.png"
-              width={120}
-              height={120}
+              src='https://res.cloudinary.com/borneos-co/image/upload/v1668059518/images/icons/Courier_acucvg.webp'
+              width={60}
+              height={60}
               alt="profil"
             />
             <p className="font-semibold text-xl">{data.name}</p>
@@ -161,7 +161,7 @@ function Profile(props) {
             </div> */}
             <div className="divider"></div>
           </div>
-          <Button onClick={handleLogout} variant="secondary" label="Keluar" />
+          <Button onClick={handleLogout} variant="secondary">Keluar</Button>
         </div>
       </Layout>
     </>

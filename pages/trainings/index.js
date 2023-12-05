@@ -40,6 +40,7 @@ export default function Trainings(props) {
         query: {
           origin: `${ENV.URL}/trainings`,
         },
+        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/trainings`
       });
     }, 1000);
   };
@@ -51,6 +52,7 @@ export default function Trainings(props) {
     await axios
       .get(`${ENV.API_SSO}validation`)
       .then((response) => {
+        fetchEvents();
         if (response.status === 200) {
           setData(response.data.data);
         } else if (response.data.meta.statusCode !== STATUS.SUCCESS) {
@@ -77,14 +79,13 @@ export default function Trainings(props) {
       fetchUser(clientRenderCookie);
     } else {
       if (!dataUser) {
-        setTimeout(() => {
-          router.push({
-            pathname: `${ENV.URL_SSO}/login`,
-            query: {
-              origin: `${ENV.URL}/trainings`
-            }
-          }) 
-        },500)
+        router.push({
+          pathname: `${ENV.URL_SSO}/login`,
+          query: {
+            origin: `${ENV.URL}/trainings`
+          },
+          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/trainings`
+        }) 
       }
     }
     // Check if bring token server
@@ -123,8 +124,8 @@ export default function Trainings(props) {
               dan <span className="font-bold"> Waktu </span> Pelatihan.
             </p>
           </div>
-          {dataEvents?.map((item) => (
-            <div key={item?.id}>
+          {dataEvents?.map((item, id) => (
+            <div key={id}>
               <Card
                 type="training"
                 title={item?.name}

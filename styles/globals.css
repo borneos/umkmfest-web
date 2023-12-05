@@ -25,3 +25,14 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+#wysiwyg-borneos p {
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+
+#wysiwyg-borneos ol {
+  margin-left: 18px;
+  list-style-type: decimal;
+  color: rgb(78, 78, 78);
+}
