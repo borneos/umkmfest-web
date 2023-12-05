@@ -18,6 +18,7 @@ function Profile(props) {
   const token = cookies?.borneos;
   const router = useRouter();
   const [data, setData] = useState(dataUser || {});
+  const [dataHistoryEventTraining, setDataHistoryEventTraining] = useState();
 
   const { showToast } = useToast();
 
@@ -29,7 +30,7 @@ function Profile(props) {
         query: {
           origin: `${ENV.URL}/profile`,
         },
-        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
+        asPath: `${ENV.URL_SSO}`
       });
     }, 1000);
   };
@@ -77,6 +78,26 @@ function Profile(props) {
       });
   };
 
+  const fetchEventTraining = async  () => {
+    await axios
+      .get(`${ENV.API}log-event-histories?category=training&sort=asc&telp=${data.telp}&email=${data.email}`)
+      .then((response) => {
+        console.log("🚀 ~ file: index.js:86 ~ .then ~ response:", response)
+        // if (response.status === 200) {
+        //   setData(response.data.data);
+        // } else if (response.data.meta.statusCode !== STATUS.SUCCESS) {
+        //   fetchDestroy();
+        // } else {
+        //   fetchDestroy();
+        // }
+      })
+      .catch((error) => {
+        // fetchDestroy();
+        console.error(error, 'Login failed');
+        return;
+      });
+  }
+
   // Checking validation user
   useEffect(() => {
     // Check if any token cookies in client render
@@ -103,6 +124,12 @@ function Profile(props) {
       fetchUser();
     }
   }, []);
+
+  useEffect(() => {
+    if(data?.name){
+      fetchEventTraining();
+    }
+  }, [data])
 
   return (
     <>
