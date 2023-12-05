@@ -8,7 +8,6 @@ import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { HiInformationCircle } from "react-icons/hi";
-import { useEffect, useState } from "react";
 
 export default function Trainings(props) {
   const { query, cookies, dataUser } = props;
