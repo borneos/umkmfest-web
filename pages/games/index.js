@@ -54,20 +54,20 @@ export default function Games(props) {
   // Checking validation user
   useEffect(() => {
     // Check if any token cookies in client render
-    // const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME)
-    // if(clientRenderCookie){
-    //   fetchUser(clientRenderCookie);
-    // }else{
-    //   if(!dataUser){
-    //     router.push({
-    //       pathname: `${ENV.URL_SSO}/login`,
-    //       query: {
-    //         origin: `${ENV.URL}/games`
-    //       },
-    //       asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/games`
-    //     })
-    //   }
-    // }
+    const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME);
+    if (clientRenderCookie) {
+      fetchUser(clientRenderCookie);
+    } else {
+      if (!dataUser) {
+        router.push({
+          pathname: `${ENV.URL_SSO}/login`,
+          query: {
+            origin: `${ENV.URL}/games`,
+          },
+          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/games`,
+        });
+      }
+    }
     // Check if bring token server
     if (tokenServer) {
       Cookies.set(ENV.TOKEN_NAME, tokenServer);
