@@ -14,7 +14,7 @@ export default function Success(props) {
   const router = useRouter();
   const token = cookies?.borneos;
   const [data, setData] = useState(dataUser || {});
-  console.log('🚀 ~ file: success.js:11 ~ Success ~ data:', data);
+
   const showConfetti = () => {
     confetti({
       zIndex: 9999,

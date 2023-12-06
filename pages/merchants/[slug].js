@@ -14,13 +14,9 @@ import QRCode from 'react-qr-code';
 export default function Merchant(props) {
   const { query, cookies, dataUser } = props;
   const [dataMerchant, setDataMerchant] = useState([]);
-  console.log(
-    '🚀 ~ file: [slug].js:17 ~ Merchant ~ dataMerchant:',
-    dataMerchant,
-  );
+
   const router = useRouter();
   const slug = query.slug;
-  console.log('🚀 ~ file: [slug].js:23 ~ Merchant ~ slug:', slug);
 
   const fetchMerchant = async () => {
     await axios

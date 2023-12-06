@@ -4,7 +4,24 @@ import React from 'react';
 import { HiChevronRight, HiCheck, HiBadgeCheck} from 'react-icons/hi';
 
 export default function Card(props) {
-  const { image, title, description, type, link, status, disabled, isSuccess, startTime, endTime, onClick } = props;
+  const {
+    image,
+    title,
+    description,
+    type,
+    link,
+    status,
+    disabled,
+    isSuccess,
+    startTime,
+    endTime,
+    onClick,
+  } = props;
+  console.log('🚀 ~ file: Card.jsx:20 ~ Card ~ type:', type);
+
+  const dateEvent = new Date(description).getDate();
+
+  const today = new Date().getDate();
 
   const options = {
     weekday: 'long',
@@ -29,9 +46,12 @@ export default function Card(props) {
                       options,
                     )}{' '}
                   </p>
-                  {startTime &&
-                    <p className='text-sm text-blue-600'>{startTime} - {endTime}</p>
-                  || null}
+                  {(startTime && (
+                    <p className="text-sm text-blue-600">
+                      {startTime} - {endTime}
+                    </p>
+                  )) ||
+                    null}
                 </div>
             </div>
             <HiBadgeCheck className='text-[#329DAA]' size={36} />
@@ -46,9 +66,16 @@ export default function Card(props) {
               ? `games/${link}`
               : ''
           }
+          style={{
+            pointerEvents: today === dateEvent ? 'auto' : 'none',
+          }}
           onClick={onClick}
         >
-          <div className="shadow-md rounded-md p-[15px] text-black">
+          <div className={`p-[15px] ${
+            today === dateEvent
+              ? 'shadow-md rounded-md text-black'
+              : 'bg-gray-200 shadow-none rounded-md text-gray-300'
+          } `}>
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <div>
