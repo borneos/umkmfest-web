@@ -63,7 +63,6 @@ export default function Training(props) {
     await axios
       .post(`${ENV.API}events`, body)
       .then((response) => {
-        console.log("🚀 ~ file: [slug].js:67 ~ .then ~ response:", response)
         if(response?.status === STATUS.SUCCESS){
           if(response?.data?.statusCode === 400){
             showToast(STATUS_TOAST.ERROR, "Gagal mendaftar, No Telepon telah digunakan!")
