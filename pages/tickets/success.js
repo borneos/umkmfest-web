@@ -13,7 +13,7 @@ import useToast from '@/hooks/useToast';
 export default function Success(props) {
   const router = useRouter();
   const { query } = router;
-  console.log("🚀 ~ file: success.js:15 ~ Success ~ query:", query)
+  console.log('🚀 ~ file: success.js:15 ~ Success ~ query:', query);
 
   const showConfetti = () => {
     confetti({
@@ -32,33 +32,42 @@ export default function Success(props) {
     //   telp: telp
     // }
     await axios
-      .get(`${ENV.API}games/create?name=${name}&telp=${telp}&id_event=${query.eventId}`)
+      .get(
+        `${ENV.API}games/create?name=${name}&telp=${telp}&id_event=${query.eventId}`,
+      )
       .then((response) => {
-        if(response?.status === STATUS.SUCCESS){
-          console.log("🚀 ~ file: success.js:38 ~ .then ~ response:", response)
-          if(response?.data?.statusCode === 500){
-            showToast(STATUS_TOAST.ERROR, "Gagal bermain, anda telah melakukan bermain sebelumnya")
-          }else{
-            if(response?.data?.meta[0].statusCode === STATUS.ERROR_500){
-              showToast(STATUS_TOAST.ERROR, 'Kamu telah melakukan registrasi ticket')
-              router.push('/games')
-            }else{
-              showToast(STATUS_TOAST.SUCCESS, `Yuk bermain sekarang`)
+        if (response?.status === STATUS.SUCCESS) {
+          console.log('🚀 ~ file: success.js:38 ~ .then ~ response:', response);
+          if (response?.data?.statusCode === 500) {
+            showToast(
+              STATUS_TOAST.ERROR,
+              'Gagal bermain, anda telah melakukan bermain sebelumnya',
+            );
+          } else {
+            if (response?.data?.meta[0].statusCode === STATUS.ERROR_500) {
+              showToast(
+                STATUS_TOAST.ERROR,
+                'Kamu telah melakukan registrasi ticket',
+              );
+              router.push('/games');
+            } else {
+              showToast(STATUS_TOAST.SUCCESS, `Yuk bermain sekarang`);
+              router.push('/games');
             }
           }
         }
       })
       .catch((error) => {
-        showToast(STATUS_TOAST.ERROR, "Error server")
+        showToast(STATUS_TOAST.ERROR, 'Error server');
         console.error(error, 'Login failed');
         return;
       });
-  }
+  };
 
   return (
     <>
       <div
-        className="bg-green-700 max-w-md container mx-auto min-h-screen flex flex-col justify-center items-center"
+        className="bg-[#1996a4] max-w-md container mx-auto min-h-screen flex flex-col justify-center items-center"
         onLoad={() => showConfetti()}
       >
         <div className="text-center">
@@ -75,8 +84,11 @@ export default function Success(props) {
             </h3>
             <p>
               Anda berkesempatan mendapatkan{' '}
-              <span className="font-bold"> Doorprize & Voucher belanja 20k untuk 50 pemain pertama, </span> klik{' '}
-              <span className="font-bold">Main Game</span>
+              <span className="font-bold">
+                {' '}
+                Doorprize & Voucher belanja 20k untuk 50 pemain pertama,{' '}
+              </span>{' '}
+              klik <span className="font-bold">Main Game</span>
             </p>
           </div>
           <div className="flex my-2 justify-between gap-2">
