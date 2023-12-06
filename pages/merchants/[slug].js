@@ -41,7 +41,7 @@ export default function Merchant(props) {
       <div className="bg-white max-w-md min-h-screen container mx-auto">
         <div className="bg-white">
           <Link
-            href="/merchants"
+            href="/"
             className="text-black bg-white rounded-full z-10 ml-4 top-6 absolute"
           >
             <HiChevronLeft size={24} />

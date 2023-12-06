@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { HiChevronRight, HiCheck, HiBadgeCheck} from 'react-icons/hi';
+import { HiChevronRight, HiCheck, HiBadgeCheck } from 'react-icons/hi';
 
 export default function Card(props) {
   const {
@@ -30,34 +30,42 @@ export default function Card(props) {
     day: 'numeric',
   };
 
+  if (today === dateEvent && type === 'ticket') {
+    console.log(true);
+  } else {
+    console.log(false);
+  }
+
   return (
     <>
-      {type === 'history' ?
+      {type === 'history' ? (
         <div className="shadow-md rounded-md p-[15px] text-black border-[1px] border-gray-200">
           <div className="flex justify-between items-center gap-3">
             <div className="items-center">
-                <p className='text-sm text-gray-400 font-light'>Anda telah terdaftar pada acara:</p>
-                <p className="font-semibold text-sm"> {title ?? ''} </p>
-                <div className='flex items-center gap-2'>
-                  <p className="text-sm text-gray-500">
-                    {' '}
-                    {new Date(description).toLocaleDateString(
-                      'id-ID',
-                      options,
-                    )}{' '}
+              <p className="text-sm text-gray-400 font-light">
+                Anda telah terdaftar pada acara:
+              </p>
+              <p className="font-semibold text-sm"> {title ?? ''} </p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm text-gray-500">
+                  {' '}
+                  {new Date(description).toLocaleDateString(
+                    'id-ID',
+                    options,
+                  )}{' '}
+                </p>
+                {(startTime && (
+                  <p className="text-sm text-blue-600">
+                    {startTime.slice(0, 5)} - {endTime.slice(0, 5)}
                   </p>
-                  {(startTime && (
-                    <p className="text-sm text-blue-600">
-                      {startTime} - {endTime}
-                    </p>
-                  )) ||
-                    null}
-                </div>
+                )) ||
+                  null}
+              </div>
             </div>
-            <HiBadgeCheck className='text-[#329DAA]' size={36} />
+            <HiBadgeCheck className="text-[#329DAA]" size={36} />
           </div>
         </div>
-        :
+      ) : (
         <Link
           href={
             type == 'training'
@@ -67,15 +75,21 @@ export default function Card(props) {
               : ''
           }
           style={{
-            pointerEvents: today === dateEvent ? 'auto' : 'none',
+            // pointerEvents: today === dateEvent ? 'auto' : 'none',
+            pointerEvents:
+              type == 'ticket' ? (today === dateEvent ? 'auto' : 'none') : '',
           }}
           onClick={onClick}
         >
-          <div className={`p-[15px] ${
-            today === dateEvent
-              ? 'shadow-md rounded-md text-black'
-              : 'bg-gray-200 shadow-none rounded-md text-gray-300'
-          } `}>
+          <div
+            className={`p-[15px] ${
+              type == 'ticket'
+                ? today === dateEvent
+                  ? 'shadow-md rounded-md text-black'
+                  : 'bg-gray-200 shadow-none rounded-md text-gray-300'
+                : 'shadow-md rounded-md text-black'
+            }`}
+          >
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <div>
@@ -92,12 +106,12 @@ export default function Card(props) {
                     width={50}
                     height={50}
                     alt={title}
-                    className='max-w-[40px]'
+                    className="max-w-[40px]"
                   />
                 </div>
                 <div>
                   <p className="font-semibold"> {title ?? ''} </p>
-                  <div className='flex items-center gap-2'>
+                  <div className="flex items-center gap-2">
                     <p className="text-sm text-gray-500">
                       {' '}
                       {new Date(description).toLocaleDateString(
@@ -105,24 +119,26 @@ export default function Card(props) {
                         options,
                       )}{' '}
                     </p>
-                    {startTime &&
-                      <p className='text-sm text-blue-600'>{startTime} - {endTime}</p>
-                    || null}
+                    {(startTime && (
+                      <p className="text-sm text-blue-600">
+                        {startTime} - {endTime}
+                      </p>
+                    )) ||
+                      null}
                   </div>
                 </div>
               </div>
               <div>
-                {
-                  isSuccess ?
-                  <HiCheck className='text-green-600' size={24} />
-                  : <HiChevronRight size={24} />
-                }
-                
+                {isSuccess ? (
+                  <HiCheck className="text-green-600" size={24} />
+                ) : (
+                  <HiChevronRight size={24} />
+                )}
               </div>
             </div>
           </div>
         </Link>
-      }
+      )}
     </>
   );
 }

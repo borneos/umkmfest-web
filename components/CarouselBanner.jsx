@@ -14,7 +14,7 @@ export default function CarouselBanner(props) {
     speed: 500,
     arrows: false,
     dots: true,
-    autoPlay: true,
+    autoplay: true,
     autoplaySpeed: 2000,
     cssEase: 'linear',
   };

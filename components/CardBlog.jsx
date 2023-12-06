@@ -1,8 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 export default function CardBlog(props) {
   const { data, title, image, link } = props;
+  console.log('🚀 ~ file: CardBlog.jsx:6 ~ CardBlog ~ data:', data);
 
   function timeElapsedString(createdAt) {
     const currentDate = new Date();
@@ -28,26 +30,34 @@ export default function CardBlog(props) {
 
   return (
     <>
-      <div className="shadow-md rounded-xl my-4 w-[348px] h-[230]">
-        <div className="flex flex-col gap-2 p-1">
-          <Image
-            alt="blog1"
-            width={338}
-            height={122}
-            // src={populateAdditionalImage({
-            //   ...parse(data.imageAdditional),
-            //   height: 338,
-            //   width: 122,
-            //   extension: 'webp',
-            // })}
-            src={data.image}
-          />
-          <p className="font-semibold text-base text-black">{data.name}</p>
-          <p className="text-xs text-gray-400">
-            {timeElapsedString(data.createdAt)}
-          </p>
+      <Link href={`blogs/${data?.slug}`}>
+        <div className="shadow-md rounded-xl my-4">
+          <div className="flex flex-col gap-2 p-2">
+            <Image
+              alt="blog1"
+              width={338}
+              height={122}
+              style={{
+                width: '100%',
+              }}
+              className="rounded-t-md"
+              // src={populateAdditionalImage({
+              //   ...parse(data.imageAdditional),
+              //   height: 338,
+              //   width: 122,
+              //   extension: 'webp',
+              // })}
+              src={data.image}
+            />
+            <div className="p-3">
+              <p className="font-semibold text-base text-black">{data.name}</p>
+              <p className="text-xs text-gray-400">
+                {timeElapsedString(data.createdAt)}
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }
