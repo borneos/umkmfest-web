@@ -1,23 +1,59 @@
+import React, { useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import Layout from '@/components/Layout';
 import ENV from '@/constant/env';
-import { STATUS } from '@/constant/status';
+import { STATUS, STATUS_TOAST } from '@/constant/status';
 import axios from 'axios';
 import confetti from 'canvas-confetti';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import useToast from '@/hooks/useToast';
 
 export default function Success(props) {
   const router = useRouter();
   const { query } = router;
+  console.log("🚀 ~ file: success.js:15 ~ Success ~ query:", query)
 
   const showConfetti = () => {
     confetti({
       zIndex: 9999,
     });
   };
+
+  const { showToast } = useToast();
+
+  const playGame = async () => {
+    const name = localStorage.getItem('userDataName');
+    const telp = localStorage.getItem('userDataTelp');
+    // const body ={
+    //   idEvent: query.eventId,
+    //   name: name,
+    //   telp: telp
+    // }
+    await axios
+      .get(`${ENV.API}games/create?name=${name}&telp=${telp}&id_event=${query.eventId}`)
+      .then((response) => {
+        if(response?.status === STATUS.SUCCESS){
+          console.log("🚀 ~ file: success.js:38 ~ .then ~ response:", response)
+          if(response?.data?.statusCode === 500){
+            showToast(STATUS_TOAST.ERROR, "Gagal bermain, anda telah melakukan bermain sebelumnya")
+          }else{
+            if(response?.data?.meta[0].statusCode === STATUS.ERROR_500){
+              showToast(STATUS_TOAST.ERROR, response?.data?.meta[0].statusMessage)
+            }else{
+              showToast(STATUS_TOAST.SUCCESS, `Yuk bermain sekarang`)
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        showToast(STATUS_TOAST.ERROR, "Error server")
+        console.error(error, 'Login failed');
+        return;
+      });
+  }
+
   return (
     <>
       <div
@@ -38,11 +74,11 @@ export default function Success(props) {
             </h3>
             <p>
               Anda berkesempatan mendapatkan{' '}
-              <span className="font-bold"> Bingkisan & Doorprize, </span> klik{' '}
+              <span className="font-bold"> Doorprize & Voucher belanja 20k untuk 50 pemain pertama, </span> klik{' '}
               <span className="font-bold">Main Game</span>
             </p>
           </div>
-          <div className="flex my-2 justify-between">
+          <div className="flex my-2 justify-between gap-2">
             <Button
               variant="secondary"
               className="w-[190px]"
@@ -50,7 +86,7 @@ export default function Success(props) {
             >
               Nanti Saja
             </Button>
-            <Button variant="primary" className="w-[200px]">
+            <Button onClick={playGame} variant="primary" className="w-[200px]">
               Main Game
             </Button>
           </div>

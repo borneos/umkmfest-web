@@ -29,10 +29,6 @@ export default function Tickets(props) {
       });
   };
 
-  const handleSubmitTicket = async (id) => {
-    showToast(STATUS_TOAST.ERROR, 'Event belum di mulai');
-  };
-
   const handleSubmit = async (item) => {
     const name = localStorage.getItem('userDataName');
     const telp = localStorage.getItem('userDataTelp');
@@ -51,6 +47,7 @@ export default function Tickets(props) {
             query: {
               name: name,
               title: item?.name,
+              eventId: item?.id
             },
           });
           if (response?.data?.statusCode === 400) {

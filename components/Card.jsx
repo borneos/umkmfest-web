@@ -17,7 +17,6 @@ export default function Card(props) {
     endTime,
     onClick,
   } = props;
-  console.log('🚀 ~ file: Card.jsx:20 ~ Card ~ type:', type);
 
   const dateEvent = new Date(description).getDate();
 

@@ -2,10 +2,40 @@ import Button from '@/components/Button';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 
 export default function Game() {
   const router = useRouter();
+
+  const rules = [
+    {
+      id: 0,
+      label: 'Permainan dimainkan oleh 1 orang pemain.'
+    },{
+      id: 1,
+      label: 'Peta yang didapatkan para pemain akan berbeda beda.'
+    },{
+      id: 2,
+      label: '1 peta berisi masing-masing 5 pertanyaan yang berisi clue booth yang masih berhubungan dengan produk ataupun nama booth yang berada di area festival umkm baik indoor maupun outdoor.'
+    },{
+      id: 3,
+      label: 'Jika merasa menemukan jawaban, pemain harus memindai kode qr yang terdapat di depan booth. dan lakukan tangkapan layar sebagai bukti untuk mencocokkan jawaban.'
+    },{
+      id: 4,
+      label: 'Untuk lanjut ke pertanyaan selanjutnya pemain harus menyelesaikan misi atau pertanyaan yang ada di booth tersebut'
+    },{
+      id: 5,
+      label: 'Selesaikan 1 peta untuk mendapatkan hadiah menarik dari kami, dan kamu berkesempatan mendapatkan doorprize'
+    },{
+      id: 6,
+      label: 'Untuk 50 orang pertama menyelesaikan misi akan berkesempatan mendapatkan voucher senilai 20K.'
+    }
+  ];
+
+  useEffect(() => {
+    document.getElementById('modal_rules').showModal()
+  }, []) 
 
   return (
     <>
@@ -97,6 +127,25 @@ export default function Game() {
             </div>
           </div>
         </div>
+        <dialog id="modal_rules" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Rules Permainan Mission Games PKT UMKM Fest 2023</h3>
+            <p className="py-4">
+              <ul className='list-disc ml-4'>
+                {rules?.map(item => 
+                  <li>
+                    <span>{item.label}</span>
+                  </li>
+                )}
+              </ul>
+            </p>
+            <div className="modal-action">
+              <form className='w-full' method="dialog">
+                <button className="btn w-full">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </Layout>
     </>
   );

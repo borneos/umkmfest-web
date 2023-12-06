@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
 import axios from 'axios';
 import ENV from '@/constant/env';
 import { parse } from 'cookie';
@@ -8,13 +7,40 @@ import Card from '@/components/Card';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 import { HiInformationCircle } from 'react-icons/hi';
+import { STATUS } from '@/constant/status';
 
 export default function Games(props) {
-  const { query, cookies, dataUser } = props;
-  const tokenServer = query?.token;
-  const token = cookies?.borneos;
+  const { query } = props;
   const router = useRouter();
-  const [data, setData] = useState(dataUser || {});
+  const [dataGames, setDataGames] = useState();
+  const [user, setUser] = useState();
+  console.log("🚀 ~ file: index.js:15 ~ Games ~ dataGames:", dataGames)
+  
+  const fetchGame = async () => {
+    const telp = localStorage.getItem('userDataTelp');
+    await axios
+      .get(`${ENV.API}game-histories?sort=desc&telp=${telp}`)
+      .then((response) => {
+        console.log("🚀 ~ file: index.js:23 ~ .then ~ response:", response)
+        if(response?.status === STATUS.SUCCESS) {
+          setDataGames(response?.data?.data)
+        } 
+      })
+      .catch((error) => {
+        console.warn(error, 'Login failed');
+        return;
+      });
+  }
+
+  useEffect(() => {
+    const name = localStorage.getItem('userDataName');
+    const telp = localStorage.getItem('userDataTelp');
+    fetchGame()
+    setUser({
+      name: name,
+      telp: telp
+    })
+  }, [])
 
   return (
     <>
@@ -24,58 +50,23 @@ export default function Games(props) {
           <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">
             <HiInformationCircle size={18} color="#F2994A" />
             <p className="text-xs">
-              Halo <span className="font-bold"></span>
-              <span className="font-bold">Mission Games </span> PKTUMKMFEST
-              2023, Segera dimulai Nantikan
-            </p>
-          </div>
-          {/* <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">
-            <HiInformationCircle size={18} color="#F2994A" />
-            <p className="text-xs">
-              Halo <span className="font-bold">Agung</span>, yuk{" "}
+              Halo <span className="font-bold">{user?.name || ''}</span>, yuk{" "}
               <span className="font-bold"> Mulai Mission Games </span>{" "}
               PKTUMKMFEST 2023
             </p>
           </div>
-          <Card
-            type="games"
-            title="Mission Game Day 1"
-            description="Jumat, 8 Desember 2023"
-            link="game-day-1"
-          /> */}
+          {dataGames?.map((item, id) => 
+            <div key={id}>
+              <Card
+                type="game"
+                title={`Mission Game ${item?.events[0].name}`}
+                description={item?.playDate}
+                link="game-day-1"
+              />
+            </div>
+          )}
         </div>
       </Layout>
     </>
   );
 }
-
-Games.getInitialProps = async (props) => {
-  const { query, req } = props;
-  const cookies = req?.headers?.cookie || '';
-  const parsedCookies = query?.token ? query.token : parse(cookies).borneos;
-  (query?.token && Cookies.set(ENV.TOKEN_NAME, query?.token)) || null;
-  try {
-    const headers = {
-      Authorization: `Bearer ${parsedCookies}`,
-    };
-    const params = {
-      origin: query?.origin,
-    };
-    const response = await axios.get(`${ENV.API_SSO}validation`, {
-      headers,
-      params,
-    });
-    const data = response.data.data;
-    return {
-      query,
-      cookies: parsedCookies,
-      dataUser: data,
-    };
-  } catch (error) {
-    return {
-      query,
-      cookies: parsedCookies,
-      err: error,
-    };
-  }
-};
