@@ -4,7 +4,7 @@ import React from 'react';
 import { HiChevronRight, HiCheck } from 'react-icons/hi';
 
 export default function Card(props) {
-  const { image, title, description, type, link, status, disabled, isSuccess, startTime, endTime } = props;
+  const { image, title, description, type, link, status, disabled, isSuccess, startTime, endTime, onClick } = props;
 
   const options = {
     weekday: 'long',
@@ -17,14 +17,13 @@ export default function Card(props) {
     <>
       <Link
         href={
-          type == 'ticket'
-            ? `/tickets/${link}`
-            : type == 'training'
+          type == 'training'
             ? `/trainings/${link}`
             : type == 'game'
             ? `games/${link}`
             : ''
         }
+        onClick={onClick}
       >
         <div className="shadow-md rounded-md p-[15px] text-black">
           <div className="flex justify-between items-center">

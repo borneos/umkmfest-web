@@ -17,62 +17,6 @@ function Profile(props) {
   const [data, setData] = useState();
   const [dataHistoryEventTraining, setDataHistoryEventTraining] = useState();
 
-  const { showToast } = useToast();
-
-  const fetchDestroy = async () => {
-    await Cookies.remove(token);
-      router.push({
-        pathname: `${ENV.URL_SSO}`,
-        query: {
-          origin: `${ENV.URL}profile`,
-        },
-        asPath: `${ENV.URL_SSO}`
-      });
-  };
-
-  const fetchUser = async (clientCookie) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${
-      clientCookie || token
-    }`;
-    await axios
-      .get(`${ENV.API_SSO}validation`)
-      .then((response) => {
-        if (response.status === 200) {
-          setData(response.data.data);
-        } else if (response.data.meta.statusCode !== STATUS.SUCCESS) {
-          fetchDestroy();
-        } else {
-          fetchDestroy();
-        }
-      })
-      .catch((error) => {
-        fetchDestroy();
-        console.error(error, 'Login failed');
-        return;
-      });
-  };
-
-  const handleLogout = async () => {
-    const clientCookie = Cookies.get(ENV.TOKEN_NAME);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${
-      clientCookie || token
-    }`;
-    await axios
-      .post(`${ENV.API_SSO}logout`)
-      .then((response) => {
-        if (response.status === 200) {
-          Cookies.remove(ENV.TOKEN_NAME);
-          useToast(STATUS_TOAST.SUCCESS, 'Berhasil Keluar');
-          router.push('/');
-        }
-      })
-      .catch((error) => {
-        fetchDestroy();
-        console.error(error, 'Login failed');
-        return;
-      });
-  };
-
   const fetchEventTraining = async (telp) => {
       await axios
         .get(`${ENV.API}log-event-histories?category=training&sort=desc&telp=${telp}`)
@@ -162,7 +106,7 @@ function Profile(props) {
             </div>
             <div className="divider"></div>
           </div>
-          <Button onClick={handleLogout} variant="secondary">Keluar</Button>
+          {/* <Button onClick={handleLogout} variant="secondary">Keluar</Button> */}
         </div>
       </Layout>
     </>

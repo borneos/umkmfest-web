@@ -8,10 +8,13 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
+import useToast from '@/hooks/useToast';
+import { STATUS_TOAST } from '@/constant/status';
 
 export default function Tickets(props) {
   const router = useRouter();
   const [dataTickets, setDataTickets] = useState([]);
+  const { showToast } = useToast();
   const fetchTickets = async () => {
     await axios
       .get(`${ENV.API}events?category=regular&sort=asc`)
@@ -25,6 +28,11 @@ export default function Tickets(props) {
         return;
       });
   };
+
+  const handleSubmitTicket = async (id) => {
+    showToast(STATUS_TOAST.ERROR, 'Event belum di mulai');
+  }
+
 
   const handleSubmit = async () => {
     const body = {
@@ -84,7 +92,7 @@ export default function Tickets(props) {
                 type="ticket"
                 title={`Tiket ${item?.name}`}
                 description={item?.date}
-                link={item?.slug}
+                onClick={() => handleSubmitTicket(item?.id)}
               />
             </div>
           ))}

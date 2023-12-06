@@ -74,34 +74,3 @@ export default function Trainings(props) {
     </>
   );
 }
-
-Trainings.getInitialProps = async (props) => {
-  const { query, req } = props;
-  const cookies = req?.headers?.cookie || '';
-  const parsedCookies = query?.token ? query.token : parse(cookies).borneos;
-  (query?.token && Cookies.set(ENV.TOKEN_NAME, query?.token)) || null;
-  try {
-    const headers = {
-      Authorization: `Bearer ${parsedCookies}`,
-    };
-    const params = {
-      origin: query?.origin,
-    };
-    const response = await axios.get(`${ENV.API_SSO}validation`, {
-      headers,
-      params,
-    });
-    const data = response.data.data;
-    return {
-      query,
-      cookies: parsedCookies,
-      dataUser: data,
-    };
-  } catch (error) {
-    return {
-      query,
-      cookies: parsedCookies,
-      err: error,
-    };
-  }
-};
