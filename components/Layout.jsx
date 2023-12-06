@@ -4,9 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import MenuBottom from "./MenuBottom";
 import Button from "./Button";
+import { useRouter } from "next/router";
 
 export default function Layout(props) {
   const { children, hideBottomMenu } = props;
+  const router = useRouter();
 
   const schema = yup
   .object({
@@ -44,6 +46,7 @@ export default function Layout(props) {
     const telp = localStorage.getItem('userDataTelp');
     if(!name || !telp) {
       document.getElementById('modal_auth').showModal();
+      router.push('/')
     }
   }, [])
   

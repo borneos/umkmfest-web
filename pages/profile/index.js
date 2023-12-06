@@ -46,6 +46,11 @@ function Profile(props) {
       });
   }
 
+  const handleLogout = async () => {
+    localStorage.clear()
+    router.push('/')
+  }
+
 
   useEffect(() => {
     const name = localStorage.getItem('userDataName');
@@ -130,7 +135,7 @@ function Profile(props) {
             </div>
             <div className="divider"></div>
           </div>
-          {/* <Button onClick={handleLogout} variant="secondary">Keluar</Button> */}
+          <Button onClick={handleLogout} variant="secondary">Keluar</Button>
         </div>
       </Layout>
     </>
