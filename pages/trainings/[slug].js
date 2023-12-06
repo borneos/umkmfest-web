@@ -20,14 +20,11 @@ import {
 } from 'react-icons/hi';
 
 export default function Training(props) {
-  const { query, cookies, dataUser } = props;
-  const tokenServer = query?.token;
-  const token = cookies?.borneos;
+  const { query } = props;
+  let slug = query?.slug;
   const router = useRouter();
-  const [data, setData] = useState(dataUser || {});
   const [dataEvent, setDataEvent] = useState([]);
 
-  let slug = query?.slug;
   const { showToast } = useToast();
 
   const options = {
@@ -56,11 +53,13 @@ export default function Training(props) {
   }
 
   const handleSubmit = async () => {
+    const name = localStorage.getItem('userDataName');
+    const telp = localStorage.getItem('userDataTelp');
     const body = {
       eventId: dataEvent?.id || null,
-      name: data?.name || '',
-      telp: data?.telp || '',
-      email: data?.email || ''
+      name: name || '',
+      telp: telp || '',
+      email: ''
     }
     await axios
       .post(`${ENV.API}events`, body)
@@ -75,76 +74,15 @@ export default function Training(props) {
         }
       })
       .catch((error) => {
+        showToast(STATUS_TOAST.ERROR, "Error server")
         console.error(error, 'Login failed');
         return;
       });
   }
 
-  const fetchDestroy = async () => {
-    await Cookies.remove(token);
-    setTimeout(() => {
-      router.push({
-        pathname: `${ENV.URL_SSO}`,
-        query: {
-          origin: `${ENV.URL}profile`,
-        },
-        asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}profile`
-      });
-    }, 1000);
-  };
-
-  const fetchUser = async (clientCookie) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${
-      clientCookie || token
-    }`;
-    await axios
-      .get(`${ENV.API_SSO}validation`)
-      .then((response) => {
-        if (response.status === 200) {
-          setData(response.data.data);
-        } else if (response.data.meta.statusCode !== STATUS.SUCCESS) {
-          fetchDestroy();
-        } else {
-          fetchDestroy();
-        }
-      })
-      .catch((error) => {
-        fetchDestroy();
-        console.error(error, 'Login failed');
-        return;
-      });
-  };
-
   useEffect(() => {
     fetchEvent();
   }, []);
-
-  // Checking validation user
-  // useEffect(() => {
-  //   fetchEvent();
-  //   const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME);
-  //   if (clientRenderCookie) {
-  //     fetchUser(clientRenderCookie);
-  //   } else {
-  //     if (!dataUser) {
-  //       router.push({
-  //         pathname: `${ENV.URL_SSO}/login`,
-  //         query: {
-  //           origin: `${ENV.URL}/profile`,
-  //         },
-  //         asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
-  //       });
-  //     }
-  //   }
-  //   // Check if bring token server
-  //   if (tokenServer) {
-  //     Cookies.set(ENV.TOKEN_NAME, tokenServer);
-  //   }
-
-  //   if (token) {
-  //     fetchUser();
-  //   }
-  // }, []);
 
   return (
     <>
@@ -156,14 +94,13 @@ export default function Training(props) {
           >
             <HiChevronLeft size={24} />
           </Link>
-          <Image
+          <img 
             src={dataEvent?.image}
             width='640'
             height='75'
             alt={dataEvent?.name}
             className="relative"
           />
-
           <div className="text-black py-3 px-6">
             <div className="flex justify-between">
               <h3 className="font-semibold text-xl">
@@ -210,18 +147,19 @@ export default function Training(props) {
           <h3 className="font-bold">Pemateri Pelatihan</h3>
           <div className="flex gap-2 my-3">
             <div className="bg-white shadow-md rounded-md p-4 w-full flex gap-2">
-              <Image
+              {/* <Image
                 src={dataEvent?.presenterImage}
                 width='75'
                 height='75'
                 alt={dataEvent?.presenterName}
                 className="rounded-full object-cover"
-                // src={populateAdditionalImage({
-                //   ...dataEvent?.presenterImageAdditional,
-                //   height: 75,
-                //   width: 75,
-                //   extension: 'webp',
-                // })}
+              /> */}
+              <img 
+                src={dataEvent?.presenterImage} 
+                width='75'
+                height='75'
+                alt={dataEvent?.presenterName}
+                className="rounded-full object-cover"
               />
               <div className="flex flex-col justify-center">
                 <p className="font-semibold text-base">
@@ -239,7 +177,7 @@ export default function Training(props) {
             <p className="text-xs">Amankan segera Kursi Anda</p>
           </div>
           <button
-            onClick={handleSendWA}
+            onClick={handleSubmit}
             className="w-[235px] h-8 text-center p-1 bg-[#049548] text-white rounded-md"
           >
             Daftar

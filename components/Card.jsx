@@ -42,7 +42,7 @@ export default function Card(props) {
                   }
                   width={50}
                   height={50}
-                  alt="Tickets"
+                  alt={title}
                   className='max-w-[40px]'
                 />
               </div>

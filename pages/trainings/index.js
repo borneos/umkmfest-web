@@ -12,11 +12,8 @@ import HeadMain from "@/components/HeadMain";
 const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1701798418/pktbeedufest/asset/umkm-fest-2023_cn7ddp.png'
 
 export default function Trainings(props) {
-  const { query, cookies, dataUser } = props;
-  const tokenServer = query?.token;
-  const token = cookies?.borneos;
   const router = useRouter();
-  const [data, setData] = useState(dataUser || {});
+  const [data, setData] = useState();
   const [dataEvents, setDataEvents] = useState([]);
   const fetchEvents = async () => {
     await axios
@@ -32,70 +29,8 @@ export default function Trainings(props) {
       });
   };
 
-  const fetchDestroy = async () => {
-    await Cookies.remove(token);
-    setTimeout(() => {
-      router.push({
-        pathname: `${ENV.URL_SSO}`,
-        query: {
-          origin: `${ENV.URL}trainings`,
-        },
-        asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}trainings`
-      });
-    }, 1000);
-  };
-
-  const fetchUser = async (clientCookie) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${
-      clientCookie || token
-    }`;
-    await axios
-      .get(`${ENV.API_SSO}validation`)
-      .then((response) => {
-        fetchEvents();
-        if (response.status === 200) {
-          setData(response.data.data);
-        } else if (response.data.meta.statusCode !== STATUS.SUCCESS) {
-          fetchDestroy();
-        } else {
-          fetchDestroy();
-        }
-      })
-      .catch((error) => {
-        fetchDestroy();
-        console.error(error, 'Login failed');
-        return;
-      });
-  };
-
-  // Checking validation user
   useEffect(() => {
-    // Fetch Data Pages
     fetchEvents();
-
-    // Check if any token cookies in client render
-    const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME);
-    if (clientRenderCookie) {
-      fetchUser(clientRenderCookie);
-    } else {
-      if (!dataUser) {
-        router.push({
-          pathname: `${ENV.URL_SSO}login`,
-          query: {
-            origin: `${ENV.URL}trainings`
-          },
-          asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}trainings`
-        }) 
-      }
-    }
-    // Check if bring token server
-    if (tokenServer) {
-      Cookies.set(ENV.TOKEN_NAME, tokenServer);
-    }
-
-    if (token) {
-      fetchUser();
-    }
   }, []);
 
   return (

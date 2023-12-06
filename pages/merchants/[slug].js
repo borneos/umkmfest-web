@@ -45,7 +45,7 @@ export default function Merchant(props) {
       <div className="bg-white max-w-md min-h-screen container mx-auto">
         <div className="bg-white">
           <Link
-            href="/"
+            href="/merchants"
             className="text-black bg-white rounded-full z-10 ml-4 top-6 absolute"
           >
             <HiChevronLeft size={24} />
@@ -65,8 +65,8 @@ export default function Merchant(props) {
           </div>
         </div>
         <div className=" bg-white text-black py-3 px-6">
-          <h5 className="font-bold">Detail Pelatihan</h5>
-          <div className="my-2">
+          <h5 className="font-bold">Clue Mission Game</h5>
+          <div className="my-1">
             <div
               dangerouslySetInnerHTML={{ __html: dataMerchant?.description }}
             ></div>

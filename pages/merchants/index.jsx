@@ -10,8 +10,7 @@ export default function Merchants() {
     await axios
     .get(`${ENV.API}merchants`)
     .then((response) => {
-      console.log("🚀 ~ file: index.jsx:9 ~ .then ~ response:", response)
-      if(response.status === STATUS.SUCCESS)
+      if(response?.status === STATUS.SUCCESS)
       setDataMerchants(response.data.data)
     })
     .catch((error) => {

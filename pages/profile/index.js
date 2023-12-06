@@ -13,14 +13,8 @@ import useToast from '@/hooks/useToast';
 import { STATUS, STATUS_TOAST } from '@/constant/status';
 
 function Profile(props) {
-  const { cookies, dataUser } = props;
-  console.log("🚀 ~ file: index.js:17 ~ Profile ~ cookies:", cookies)
-  // const tokenServer = query?.token;
-  const token = cookies?.borneos;
   const router = useRouter();
-  const { query } = router;
-  const [stateQuery, setStateQuery] = useState(query);
-  const [data, setData] = useState(dataUser || {});
+  const [data, setData] = useState();
   const [dataHistoryEventTraining, setDataHistoryEventTraining] = useState();
 
   const { showToast } = useToast();
@@ -79,58 +73,32 @@ function Profile(props) {
       });
   };
 
-  const fetchEventTraining = async  () => {
-    await axios
-      .get(`${ENV.API}log-event-histories?category=training&sort=desc&email=${data.email}&telp=${data.telp}`)
-      .then((response) => {
-        if(response.status === STATUS.SUCCESS) {
-          setDataHistoryEventTraining(response.data.data)
-        } 
-      })
-      .catch((error) => {
-        console.error(error, 'Login failed');
-        return;
-      });
+  const fetchEventTraining = async (telp) => {
+      await axios
+        .get(`${ENV.API}log-event-histories?category=training&sort=desc&telp=${telp}`)
+        .then((response) => {
+          if(response.status === STATUS.SUCCESS) {
+            setDataHistoryEventTraining(response.data.data)
+          } 
+        })
+        .catch((error) => {
+          console.error(error, 'Login failed');
+          return;
+        });
   }
 
-  // Checking validation user
-  useEffect(() => {
-    // Check if any token cookies in client render
-    const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME);
-    if (clientRenderCookie) {
-      // fetchUser(clientRenderCookie);
-    } else {
-      if (!dataUser) {
-        router.push({
-          pathname: `${ENV.URL_SSO}login`,
-          query: {
-            origin: `${ENV.URL}profile`,
-          },
-          asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}profile`
-        });
-      }
-    }
-    // Check if bring token server
-    if (tokenServer) {
-      Cookies.set(ENV.TOKEN_NAME, tokenServer);
-    }
-
-    if (token) {
-      fetchUser();
-    }
-  }, []);
 
   useEffect(() => {
-    if(data?.name){
-      fetchEventTraining();
+    const name = localStorage.getItem('userDataName');
+    const telp = localStorage.getItem('userDataTelp');
+    if(name && telp){
+      setData({
+        name: name,
+        telp: telp
+      })
+      // fetchEventTraining(telp);
     }
-  }, [data])
-
-  useEffect(() => {
-    if(query){
-      setStateQuery(query)
-    }
-  }, [query])
+  }, [])
 
   return (
     <>
@@ -144,8 +112,8 @@ function Profile(props) {
               height={60}
               alt="profil"
             />
-            <p className="font-semibold text-xl">{data.name}</p>
-            <p className="text-base">{data.telp}</p>
+            <p className="font-semibold text-xl">{data?.name || '-'}</p>
+            <p className="text-base">{data?.telp || '-'}</p>
           </div>
           {/* <div>
             <p className="text-black font-semibold text-xl">History Tiket</p>
@@ -181,7 +149,7 @@ function Profile(props) {
               History Pelatihan
             </p>
             <div className="flex flex-col gap-2">
-              {dataHistoryEventTraining?.map(item => 
+              {/* {dataHistoryEventTraining?.map(item => 
                 <Card
                   type="training"
                   title={item.events[0].name}
@@ -190,7 +158,7 @@ function Profile(props) {
                   startTime={item.events[0].start_time}
                   endTime={item.events[0].end_time}
                 />
-              )}
+              )} */}
             </div>
             <div className="divider"></div>
           </div>
@@ -200,36 +168,5 @@ function Profile(props) {
     </>
   );
 }
-
-Profile.getInitialProps = async (props) => {
-  const { query, req } = props;
-  const cookies = req?.headers?.cookie || '';
-  const parsedCookies = query?.token ? query.token : parse(cookies).borneos;
-  (query?.token && Cookies.set(ENV.TOKEN_NAME, query?.token)) || null;
-  try {
-    const headers = {
-      Authorization: `Bearer ${parsedCookies}`,
-    };
-    const params = {
-      origin: query?.origin,
-    };
-    const response = await axios.get(`${ENV.API_SSO}validation`, {
-      headers,
-      params,
-    });
-    const data = response.data.data;
-    return {
-      query,
-      cookies: parsedCookies,
-      dataUser: data,
-    };
-  } catch (error) {
-    return {
-      query,
-      cookies: parsedCookies,
-      err: error,
-    };
-  }
-};
 
 export default Profile;
