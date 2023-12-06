@@ -6,7 +6,6 @@ import { HiInformationCircle } from 'react-icons/hi';
 
 export default function Game() {
   const router = useRouter();
-  console.log('🚀 ~ file: [slug].js:7 ~ Game ~ router:', router.pathname);
 
   return (
     <>

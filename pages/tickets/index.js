@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import useToast from '@/hooks/useToast';
-import { STATUS_TOAST } from '@/constant/status';
+import { STATUS, STATUS_TOAST } from '@/constant/status';
 
 export default function Tickets(props) {
   const router = useRouter();
@@ -31,20 +31,28 @@ export default function Tickets(props) {
 
   const handleSubmitTicket = async (id) => {
     showToast(STATUS_TOAST.ERROR, 'Event belum di mulai');
-  }
+  };
 
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (item) => {
+    const name = localStorage.getItem('userDataName');
+    const telp = localStorage.getItem('userDataTelp');
     const body = {
-      eventId: dataTickets?.id || null,
-      name: data?.name || '',
-      telp: data?.telp || '',
-      email: data?.email || '',
+      eventId: item?.id || null,
+      name: name || '',
+      telp: telp || '',
     };
+
     await axios
       .post(`${ENV.API}events`, body)
       .then((response) => {
         if (response?.status === STATUS.SUCCESS) {
+          router.push({
+            pathname: '/tickets/success',
+            query: {
+              name: name,
+              title: item?.name,
+            },
+          });
           if (response?.data?.statusCode === 400) {
             showToast(STATUS_TOAST.ERROR, response?.data?.statusMessage);
           } else {
@@ -92,7 +100,7 @@ export default function Tickets(props) {
                 type="ticket"
                 title={`Tiket ${item?.name}`}
                 description={item?.date}
-                onClick={() => handleSubmitTicket(item?.id)}
+                onClick={() => handleSubmit(item)}
               />
             </div>
           ))}

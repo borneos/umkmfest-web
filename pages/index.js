@@ -1,19 +1,20 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import CardBlog from "@/components/CardBlog";
-import CardEvent from "@/components/CardEvent";
-import CarouselBanner from "@/components/CarouselBanner";
-import Header from "@/components/Header";
-import Layout from "@/components/Layout";
-import { Inter } from "next/font/google";
-import Image from "next/image";
-import Slider from "react-slick";
-import { pageview } from "@/public/gtag";
-import ENV from "@/constant/env";
-import { STATUS } from "@/constant/status";
-import HeadMain from "@/components/HeadMain";
-const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1701798418/pktbeedufest/asset/umkm-fest-2023_cn7ddp.png'
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import CardBlog from '@/components/CardBlog';
+import CardEvent from '@/components/CardEvent';
+import CarouselBanner from '@/components/CarouselBanner';
+import Header from '@/components/Header';
+import Layout from '@/components/Layout';
+import { Inter } from 'next/font/google';
+import Image from 'next/image';
+import Slider from 'react-slick';
+import { pageview } from '@/public/gtag';
+import ENV from '@/constant/env';
+import { STATUS } from '@/constant/status';
+import HeadMain from '@/components/HeadMain';
+const OG_IMAGE =
+  'https://res.cloudinary.com/borneos-co/image/upload/v1701798418/pktbeedufest/asset/umkm-fest-2023_cn7ddp.png';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -143,13 +144,13 @@ export default function Home() {
           />
           <CardEvent
             title=""
-            subTitle="Tiket UMKMFest 2023"
+            subTitle="Tiket Masuk UMKMFest 2023"
             image="/images/Ticket 1.png"
             btnLabel="Tiket Masuk"
             buttonVariant="primary"
             link="/tickets"
           />
-          {/* <div>
+          <div>
             <div className="flex justify-between items-center justify-items-center">
               <h2 className="font-semibold text-xl text-black">Info Terbaru</h2>
               <span className="text-sm">Info Lainnya</span>
@@ -161,7 +162,7 @@ export default function Home() {
                 </div>
               ))}
             </Slider>
-          </div> */}
+          </div>
         </div>
       </Layout>
     </>
