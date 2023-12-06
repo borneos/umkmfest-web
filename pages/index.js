@@ -13,6 +13,7 @@ import { pageview } from '@/public/gtag';
 import ENV from '@/constant/env';
 import { STATUS } from '@/constant/status';
 import HeadMain from '@/components/HeadMain';
+import Link from 'next/link';
 const OG_IMAGE =
   'https://res.cloudinary.com/borneos-co/image/upload/v1701798418/pktbeedufest/asset/umkm-fest-2023_cn7ddp.png';
 
@@ -21,7 +22,7 @@ const inter = Inter({ subsets: ['latin'] });
 export default function Home() {
   const router = useRouter();
   const [dataBanner, setDataBanner] = useState([]);
-  const [dataBlog, setDataBlog] = useState([]);
+  const [dataBlogs, setDataBlogs] = useState([]);
 
   const settings = {
     className: 'center',
@@ -48,12 +49,12 @@ export default function Home() {
       });
   };
 
-  const fetchBlog = async () => {
+  const fetchBlogs = async () => {
     await axios
       .get(`${ENV.API}blogs`)
       .then((response) => {
         if (response?.status === STATUS.SUCCESS) {
-          setDataBlog(response?.data?.data);
+          setDataBlogs(response?.data?.data);
         }
       })
       .catch((error) => {
@@ -64,7 +65,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchBanner();
-    fetchBlog();
+    fetchBlogs();
   }, []);
 
   return (
@@ -151,13 +152,15 @@ export default function Home() {
             link="/tickets"
           />
           <div>
-            <div className="flex justify-between items-center justify-items-center">
+            <div className="flex justify-between items-center">
               <h2 className="font-semibold text-xl text-black">Info Terbaru</h2>
-              <span className="text-sm">Info Lainnya</span>
+              <Link href="/blogs" className="text-black underline">
+                Info Lainnya
+              </Link>
             </div>
             <Slider {...settings}>
-              {dataBlog.splice(0, 3).map((item) => (
-                <div key={item.id}>
+              {dataBlogs?.map((item) => (
+                <div key={item.id} className="px-2">
                   <CardBlog data={item} />
                 </div>
               ))}
