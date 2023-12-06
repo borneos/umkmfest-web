@@ -40,7 +40,8 @@ export default function Success(props) {
             showToast(STATUS_TOAST.ERROR, "Gagal bermain, anda telah melakukan bermain sebelumnya")
           }else{
             if(response?.data?.meta[0].statusCode === STATUS.ERROR_500){
-              showToast(STATUS_TOAST.ERROR, response?.data?.meta[0].statusMessage)
+              showToast(STATUS_TOAST.ERROR, 'Kamu telah melakukan registrasi ticket')
+              router.push('/games')
             }else{
               showToast(STATUS_TOAST.SUCCESS, `Yuk bermain sekarang`)
             }

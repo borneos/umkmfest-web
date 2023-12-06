@@ -1,12 +1,26 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Button from '@/components/Button';
 import Header from '@/components/Header';
+import OTPInput from '@/components/OTPInput';
 import Layout from '@/components/Layout';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+
+import axios from 'axios';
 import { HiInformationCircle } from 'react-icons/hi';
+import ENV from '@/constant/env';
+import { STATUS, STATUS_TOAST } from '@/constant/status';
+import useToast from '@/hooks/useToast';
 
 export default function Game() {
   const router = useRouter();
+  const { query } = router;
+  const [otp, setOtp] = useState();
+  const [dataLogGame, setDataLogGame] = useState();
+  const [dataGame, setDataGame] = useState();
+  const [dataEvent, setDataEvent] = useState();
+  const [dataMission, setDataMissions] = useState();
+
+  const { showToast } = useToast();
 
   const rules = [
     {
@@ -33,14 +47,71 @@ export default function Game() {
     }
   ];
 
+  const handleOnOTPComplete = () => {
+
+  }
+
+  function handleOnChange(e) {
+    setOtp(e);
+  }
+
+  const fetchGame = async () => {
+    const name = localStorage.getItem('userDataName');
+    const telp = localStorage.getItem('userDataTelp');
+    await axios
+      .get(`${ENV.API}game-histories/${query.slug}?telp=${telp}&name=${name}`)
+      .then((response) => {
+        console.log("🚀 ~ file: [slug].js:61 ~ .then ~ response:", response)
+        if(response?.status === STATUS.SUCCESS) {
+
+          setDataGame(response.data.data[0].games)
+          setDataEvent(response.data.data[0].events)
+          setDataMissions(response.data.data[0].mission[0])
+          setDataLogGame(response.data.data[0])
+        } 
+      })
+      .catch((error) => {
+        console.warn(error, 'Login failed');
+        return;
+      });
+  }
+
+  const handleComplete = async () => {
+    const name = localStorage.getItem('userDataName');
+    const telp = localStorage.getItem('userDataTelp');
+    const body = {
+      name: name,
+      telp: telp,
+      pinToken: otp
+    }
+    await axios
+      .put(`${ENV.API}games/complete/${dataLogGame.id}`, body)
+      .then((response) => {
+        if(response.status === STATUS.SUCCESS) {
+          showToast(STATUS_TOAST.SUCCESS, "Selamat kamu telah menyelesaikan mission games");
+          router.push({
+            pathname: '/games/success',
+            query: {
+              name: name
+            }
+          })
+        }
+      })
+      .catch((error) => {
+        console.warn(error, 'Login failed');
+        return;
+      });
+  }
+
   useEffect(() => {
-    document.getElementById('modal_rules').showModal()
+    document.getElementById('modal_rules').showModal();
+    fetchGame()
   }, []) 
 
   return (
     <>
       <Layout>
-        <Header />
+        {/* <Header pageTitle={`${dataGame[0]?.code}`} /> */}
         <div className="bg-[#F2F2F2] min-h-screen">
           <div className="container mx-auto px-4 flex flex-col gap-3">
             <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">
@@ -53,77 +124,38 @@ export default function Game() {
             </div>
           </div>
           <div className="container mx-auto px-4 flex flex-col gap-3 my-5">
-            <div className="collapse collapse-arrow bg-white text-black shadow-sm">
-              <input type="radio" name="my-accordion-2" checked="checked" />
-              <div className="collapse-title text-xl font-medium">Misi 1</div>
-              <div className="collapse-content">
-                <div className="px-3">
-                  <p className="font-bold">Peta dan Instruksi</p>
-                  <ul className="list-disc">
-                    <li>
-                      Periksa peta di tas petualanganmu. Di sana terdapat
-                      petunjuk lokasi awal dan jejak menuju harta karun.
-                    </li>
-                    <li>
-                      Catat instruksi tentang tanda-tanda alam yang akan
-                      membimbingmu.
-                    </li>
-                  </ul>
+            {dataMission?.length > 0 && 
+              dataMission?.map(item => 
+                <div className="collapse collapse-arrow bg-white text-black">
+                  <input type="radio" name={`my-accordion-${item.id}`} />
+                  <div className="collapse-title text-xl font-medium">{item.name}</div>
+                  <div className="collapse-content">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  ></div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="collapse collapse-arrow bg-white text-black">
-              <input type="radio" name="my-accordion-2" />
-              <div className="collapse-title text-xl font-medium">Misi 1</div>
-              <div className="collapse-content">
-                <p>hello</p>
-              </div>
-            </div>
+              )
+            || null}
+            
             <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">
               <HiInformationCircle size={24} color="#F2994A" />
               <p className="text-xs">
-                Jika sudah menyelesaikan misi, dapatkan Passcode & Bingkisan.
+                Jika sudah menyelesaikan misi, dapatkan Passcode &
                 Silakan Hubungi Panitia!
               </p>
             </div>
             <div className="text-black">
               <p>Masukkan Passcode</p>
-
-              <form>
-                <div className="flex justify-between my-3">
-                  <input
-                    type="text"
-                    maxLength="1"
-                    className="w-16 h-16 rounded-md bg-white border-2 border-gray-200 text-center"
-                  />
-                  <input
-                    type="text"
-                    maxLength="1"
-                    className="w-16 h-16 rounded-md bg-white border-2 border-gray-200 text-center"
-                  />
-                  <input
-                    type="text"
-                    maxLength="1"
-                    className="w-16 h-16 rounded-md bg-white border-2 border-gray-200 text-center"
-                  />
-                  <input
-                    type="text"
-                    maxLength="1"
-                    className="w-16 h-16 rounded-md bg-white border-2 border-gray-200 text-center"
-                  />
-                  <input
-                    type="text"
-                    maxLength="1"
-                    className="w-16 h-16 rounded-md bg-white border-2 border-gray-200 text-center"
-                  />
-                  <input
-                    type="text"
-                    maxLength="1"
-                    className="w-16 h-16 rounded-md bg-white border-2 border-gray-200 text-center"
-                  />
-                </div>
-                <Button variant="primary" label="Submit" />
-              </form>
+              <div className="text-center">
+                <OTPInput
+                  isNumber
+                  onComplete={handleOnOTPComplete}
+                  onChange={handleOnChange}
+                  defaultValue={otp}
+                />
+              </div>
+              <Button onClick={handleComplete} variant="primary" className="mt-4 w-full">Complete</Button>
             </div>
           </div>
         </div>
@@ -133,9 +165,7 @@ export default function Game() {
             <p className="py-4">
               <ul className='list-disc ml-4'>
                 {rules?.map(item => 
-                  <li>
-                    <span>{item.label}</span>
-                  </li>
+                  <li>{item.label}</li>
                 )}
               </ul>
             </p>
@@ -150,3 +180,18 @@ export default function Game() {
     </>
   );
 }
+
+Game.getInitialProps = async (props) => {
+  const { query } = props;
+  try {
+    return {
+      query
+    };
+  } catch (error) {
+    return {
+      query,
+      err: error,
+    };
+  }
+};
+

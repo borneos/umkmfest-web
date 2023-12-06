@@ -51,14 +51,11 @@ export default function Tickets(props) {
             },
           });
           if (response?.data?.statusCode === 400) {
-            showToast(STATUS_TOAST.ERROR, response?.data?.statusMessage);
+            // showToast(STATUS_TOAST.ERROR, response?.data?.statusMessage);
           } else {
             showToast(
               STATUS_TOAST.SUCCESS,
               `Berhasil mendaftar event ${dataEvent?.name || '-'}`,
-            );
-            router.push(
-              `https://wa.me/628115475113?text=Saya siap hadir di ${dataEvent.name}`,
             );
           }
         }

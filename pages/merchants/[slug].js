@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { HiChevronLeft, HiQrcode, HiShare } from 'react-icons/hi';
+import { HiChevronLeft, HiQrcode, HiShare, HiInformationCircle } from 'react-icons/hi';
 import QRCode from 'react-qr-code';
 
 export default function Merchant(props) {
@@ -67,6 +67,12 @@ export default function Merchant(props) {
               dangerouslySetInnerHTML={{ __html: dataMerchant?.description }}
             ></div>
           </div>
+        </div>
+        <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1 mx-6">
+          <HiInformationCircle size={18} color="#F2994A" />
+          <p className="text-xs">
+            Jika {dataMerchant?.name} merupakan jawaban dari peta mission games kamu, Silahkan lakukan tangkap layar.
+          </p>
         </div>
         <div className="my-1 bg-white text-black flex mx-auto fixed bottom-0 left-0 right-0 max-w-md justify-between shadow-inner items-center px-[25px] py-[6px] gap-3 ">
           <div className="w-[5em]">

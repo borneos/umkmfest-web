@@ -36,3 +36,34 @@ body {
   list-style-type: decimal;
   color: rgb(78, 78, 78);
 }
+
+input {
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-position: right;
+  background-size: auto;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 5px;
+  top: 12px;
+  width: auto;
+  min-width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: 'textfield';
+}
+
+.input:focus, .input:focus-within {
+  outline-style: auto;
+}

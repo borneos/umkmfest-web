@@ -151,6 +151,7 @@ export default function Home() {
             buttonVariant="primary"
             link="/tickets"
           />
+          {dataBlogs.length > 0 && 
           <div>
             <div className="flex justify-between items-center">
               <h2 className="font-semibold text-xl text-black">Info Terbaru</h2>
@@ -166,6 +167,7 @@ export default function Home() {
               ))}
             </Slider>
           </div>
+          || null}
         </div>
       </Layout>
     </>

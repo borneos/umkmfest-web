@@ -74,8 +74,8 @@ export default function Blog(props) {
             alt={dataBlog?.name}
             className="relative"
           />
-          <div className="text-black py-3 px-6">
-            <div className="flex justify-between">
+          <div className="text-black pt-3 px-6">
+            <div>
               <h3 className="font-semibold text-xl">
                 {dataBlog?.name ?? 'Title'}
               </h3>
@@ -85,8 +85,7 @@ export default function Blog(props) {
             </div>
           </div>
         </div>
-        <div className="my-4 bg-white text-black py-3 px-6">
-          <h5 className="font-bold">Detail Pelatihan</h5>
+        <div className="my-2 bg-white text-black px-6">
           <div id="wysiwyg-borneos" className="my-2">
             <div
               dangerouslySetInnerHTML={{ __html: dataBlog?.description }}

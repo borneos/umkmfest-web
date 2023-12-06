@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 export default function CardBlog(props) {
   const { data, title, image, link } = props;
-  console.log('🚀 ~ file: CardBlog.jsx:6 ~ CardBlog ~ data:', data);
 
   function timeElapsedString(createdAt) {
     const currentDate = new Date();

@@ -55,18 +55,36 @@ export default function Games(props) {
               PKTUMKMFEST 2023
             </p>
           </div>
-          {dataGames?.map((item, id) => 
+          {dataGames?.length > 0 ? dataGames?.map((item, id) => 
             <div key={id}>
               <Card
                 type="game"
                 title={`Mission Game ${item?.events[0].name}`}
                 description={item?.playDate}
-                link="game-day-1"
+                link={item?.id}
               />
             </div>
-          )}
+          ) :
+            <div className='p-2 text-center'>
+              <span className='text-gray-300'>Anda belum memiliki history mission game</span>
+            </div>
+          }
         </div>
       </Layout>
     </>
   );
 }
+
+Games.getInitialProps = async (props) => {
+  const { query } = props;
+  try {
+    return {
+      query,
+    };
+  } catch (error) {
+    return {
+      err: error,
+    };
+  }
+};
+

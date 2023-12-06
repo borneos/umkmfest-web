@@ -69,7 +69,7 @@ export default function Training(props) {
             showToast(STATUS_TOAST.ERROR, "Gagal mendaftar, No Telepon telah digunakan!")
           }else{
             showToast(STATUS_TOAST.SUCCESS, `Berhasil mendaftar event ${dataEvent?.name || '-'}`)
-            router.push(`https://wa.me/628115475113?text=Silahkan ketik *SIAP HADIR* dibawah ini dan tekan enter untuk mengkonfirmasi kehadiran anda di ${dataEvent.name}, Peserta Terbatas`)
+            router.push('/profile')
           }
         }
       })

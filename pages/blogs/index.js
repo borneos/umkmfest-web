@@ -49,8 +49,8 @@ export default function Tickets(props) {
             <h3 className="font-bold text-black text-2xl">Info Terbaru</h3>
             <div></div>
           </div>
-          {dataBlogs?.map((item) => (
-            <div key={item?.id}>
+          {dataBlogs?.map((item, id) => (
+            <div key={id}>
               <CardBlog data={item} />
             </div>
           ))}

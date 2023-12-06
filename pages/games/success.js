@@ -21,44 +21,7 @@ export default function Success(props) {
     });
   };
 
-  const fetchDestroy = async () => {
-    await Cookies.remove(token);
-    setTimeout(() => {
-      router.push({
-        pathname: `${ENV.URL_SSO}`,
-        query: {
-          origin: `${ENV.URL}/trainings`,
-        },
-        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/trainings`,
-      });
-    }, 1000);
-  };
-
-  const fetchUser = async (clientCookie) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${
-      clientCookie || token
-    }`;
-    await axios
-      .get(`${ENV.API_SSO}validation`)
-      .then((response) => {
-        fetchEvents();
-        if (response.status === 200) {
-          setData(response.data.data);
-        } else if (response.data.meta.statusCode !== STATUS.SUCCESS) {
-          fetchDestroy();
-        } else {
-          fetchDestroy();
-        }
-      })
-      .catch((error) => {
-        fetchDestroy();
-        console.error(error, 'Login failed');
-        return;
-      });
-  };
-
   useEffect(() => {
-    fetchUser();
   }, []);
 
   return (

@@ -58,9 +58,9 @@ export default function Layout(props) {
       }
       <dialog id="modal_auth" className="modal">
         <div className="modal-box">
-         <form onSubmit={handleSubmit((e) => onSubmit(e))}>
+          <form onSubmit={handleSubmit((e) => onSubmit(e))}>
             <h3 className="font-bold text-lg">Akses Masuk PKT UMKM Festival 2023</h3>
-            <p className="p2-4">Silahkan isi formulir data diri kalian dengan benar, terutama nama dan nomor telepon aktif.</p>
+            <p className="p2-4">Silahkan isi formulir data diri kalian dengan benar, terutama Nama dan No. Whatsapp aktif.</p>
             <div className="pt-2">
               <label className="form-control w-full">
                 <div className="label">
@@ -106,7 +106,7 @@ export default function Layout(props) {
               </label>
               <div className="modal-action">
                 {/* <Button type="submit" className="w-full">Masuk</Button> */}
-                <button className="btn btn-primary" onClick={handleLogin}>Masuk</button>
+                <button className="btn btn-primary w-full" onClick={handleLogin}>Masuk</button>
               </div>
             </div>
           </form>
