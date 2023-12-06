@@ -27,7 +27,7 @@ function Profile(props) {
         } 
       })
       .catch((error) => {
-        console.error(error, 'Login failed');
+        console.warn(error, 'Login failed');
         return;
       });
   }
@@ -41,7 +41,7 @@ function Profile(props) {
         } 
       })
       .catch((error) => {
-        console.error(error, 'Login failed');
+        console.warn(error, 'Login failed');
         return;
       });
   }
@@ -78,7 +78,7 @@ function Profile(props) {
           <div>
             <p className="text-gray-500 font-semibold text-xl pb-2">History Tiket</p>
             <div className="flex flex-col gap-2">
-              {!!dataHistoryEventTraining?.length > 0 && dataHistoryEventTraining?.map(item => 
+              {!!dataHistoryEventRegular?.length > 0 && dataHistoryEventRegular?.map(item => 
                 <Card
                   type="history"
                   title={item.events[0].name}
