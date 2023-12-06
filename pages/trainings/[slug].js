@@ -58,15 +58,15 @@ export default function Training(props) {
     const body = {
       eventId: dataEvent?.id || null,
       name: name || '',
-      telp: telp || '',
-      email: ''
+      telp: telp || ''
     }
     await axios
       .post(`${ENV.API}events`, body)
       .then((response) => {
+        console.log("🚀 ~ file: [slug].js:67 ~ .then ~ response:", response)
         if(response?.status === STATUS.SUCCESS){
           if(response?.data?.statusCode === 400){
-            showToast(STATUS_TOAST.ERROR, response?.data?.statusMessage)
+            showToast(STATUS_TOAST.ERROR, "Gagal mendaftar, No Telepon telah digunakan!")
           }else{
             showToast(STATUS_TOAST.SUCCESS, `Berhasil mendaftar event ${dataEvent?.name || '-'}`)
             router.push(`https://wa.me/628115475113?text=Silahkan ketik *SIAP HADIR* dibawah ini dan tekan enter untuk mengkonfirmasi kehadiran anda di ${dataEvent.name}, Peserta Terbatas`)
@@ -189,31 +189,14 @@ export default function Training(props) {
 }
 
 Training.getInitialProps = async (props) => {
-  const { query, req } = props;
-  const cookies = req?.headers?.cookie || '';
-  const parsedCookies = query?.token ? query.token : parse(cookies).borneos;
-  (query?.token && Cookies.set(ENV.TOKEN_NAME, query?.token)) || null;
+  const { query } = props;
   try {
-    const headers = {
-      Authorization: `Bearer ${parsedCookies}`,
-    };
-    const params = {
-      origin: query?.origin,
-    };
-    const response = await axios.get(`${ENV.API_SSO}validation`, {
-      headers,
-      params,
-    });
-    const data = response.data.data;
     return {
-      query,
-      cookies: parsedCookies,
-      dataUser: data,
+      query
     };
   } catch (error) {
     return {
       query,
-      cookies: parsedCookies,
       err: error,
     };
   }
