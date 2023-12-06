@@ -16,8 +16,8 @@ export default function Game() {
   const { query } = router;
   const [otp, setOtp] = useState();
   const [dataLogGame, setDataLogGame] = useState();
-  const [dataGame, setDataGame] = useState();
-  const [dataEvent, setDataEvent] = useState();
+  const [dataGame, setDataGame] = useState({});
+  const [dataEvent, setDataEvent] = useState({});
   const [dataMission, setDataMissions] = useState();
 
   const { showToast } = useToast();
@@ -63,7 +63,6 @@ export default function Game() {
       .then((response) => {
         console.log("🚀 ~ file: [slug].js:61 ~ .then ~ response:", response)
         if(response?.status === STATUS.SUCCESS) {
-
           setDataGame(response.data.data[0].games)
           setDataEvent(response.data.data[0].events)
           setDataMissions(response.data.data[0].mission[0])
@@ -92,7 +91,8 @@ export default function Game() {
           router.push({
             pathname: '/games/success',
             query: {
-              name: name
+              name: name,
+              title: dataEvent[0]?.name || '-'
             }
           })
         }
@@ -111,7 +111,10 @@ export default function Game() {
   return (
     <>
       <Layout>
-        {/* <Header pageTitle={`${dataGame[0]?.code}`} /> */}
+        <Header pageTitle={dataEvent[0]?.name || '-'} />
+        <div className='text-center'>
+          <span className='text-gray-400 text-center'>{dataGame[0]?.code || '-'}</span>
+        </div>
         <div className="bg-[#F2F2F2] min-h-screen">
           <div className="container mx-auto px-4 flex flex-col gap-3">
             <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">

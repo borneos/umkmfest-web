@@ -44,6 +44,7 @@ export default function Success(props) {
               router.push('/games')
             }else{
               showToast(STATUS_TOAST.SUCCESS, `Yuk bermain sekarang`)
+              router.push(`/games/${response?.data?.data?.id}`)
             }
           }
         }
