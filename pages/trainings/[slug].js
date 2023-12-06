@@ -51,6 +51,10 @@ export default function Training(props) {
       });
   };
 
+  const handleSendWA = async () => {
+    router.push(`https://wa.me/628115475113?text=Silahkan ketik *SIAP HADIR* dibawah ini dan tekan enter untuk mengkonfirmasi kehadiran anda di ${dataEvent.name}, Peserta Terbatas`)
+  }
+
   const handleSubmit = async () => {
     const body = {
       eventId: dataEvent?.id || null,
@@ -66,7 +70,7 @@ export default function Training(props) {
             showToast(STATUS_TOAST.ERROR, response?.data?.statusMessage)
           }else{
             showToast(STATUS_TOAST.SUCCESS, `Berhasil mendaftar event ${dataEvent?.name || '-'}`)
-            router.push(`https://wa.me/628115475113?text=Saya siap hadir di ${dataEvent.name}`)
+            router.push(`https://wa.me/628115475113?text=Silahkan ketik *SIAP HADIR* dibawah ini dan tekan enter untuk mengkonfirmasi kehadiran anda di ${dataEvent.name}, Peserta Terbatas`)
           }
         }
       })
@@ -82,9 +86,9 @@ export default function Training(props) {
       router.push({
         pathname: `${ENV.URL_SSO}`,
         query: {
-          origin: `${ENV.URL}/profile`,
+          origin: `${ENV.URL}profile`,
         },
-        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
+        asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}profile`
       });
     }, 1000);
   };
@@ -116,34 +120,31 @@ export default function Training(props) {
   }, []);
 
   // Checking validation user
-  useEffect(() => {
-    // Fetch Data Pages
-    fetchEvent();
-    
-    // Check if any token cookies in client render
-    const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME);
-    if (clientRenderCookie) {
-      fetchUser(clientRenderCookie);
-    } else {
-      if (!dataUser) {
-        router.push({
-          pathname: `${ENV.URL_SSO}/login`,
-          query: {
-            origin: `${ENV.URL}/profile`,
-          },
-          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
-        });
-      }
-    }
-    // Check if bring token server
-    if (tokenServer) {
-      Cookies.set(ENV.TOKEN_NAME, tokenServer);
-    }
+  // useEffect(() => {
+  //   fetchEvent();
+  //   const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME);
+  //   if (clientRenderCookie) {
+  //     fetchUser(clientRenderCookie);
+  //   } else {
+  //     if (!dataUser) {
+  //       router.push({
+  //         pathname: `${ENV.URL_SSO}/login`,
+  //         query: {
+  //           origin: `${ENV.URL}/profile`,
+  //         },
+  //         asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
+  //       });
+  //     }
+  //   }
+  //   // Check if bring token server
+  //   if (tokenServer) {
+  //     Cookies.set(ENV.TOKEN_NAME, tokenServer);
+  //   }
 
-    if (token) {
-      fetchUser();
-    }
-  }, []);
+  //   if (token) {
+  //     fetchUser();
+  //   }
+  // }, []);
 
   return (
     <>
@@ -238,7 +239,7 @@ export default function Training(props) {
             <p className="text-xs">Amankan segera Kursi Anda</p>
           </div>
           <button
-            onClick={handleSubmit}
+            onClick={handleSendWA}
             className="w-[235px] h-8 text-center p-1 bg-[#049548] text-white rounded-md"
           >
             Daftar

@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { HiChevronRight } from 'react-icons/hi';
+import { HiChevronRight, HiCheck } from 'react-icons/hi';
 
 export default function Card(props) {
-  const { image, title, description, type, link, status, disabled } = props;
+  const { image, title, description, type, link, status, disabled, isSuccess, startTime, endTime } = props;
 
   const options = {
     weekday: 'long',
@@ -48,17 +48,27 @@ export default function Card(props) {
               </div>
               <div>
                 <p className="font-semibold"> {title ?? ''} </p>
-                <p className="text-sm text-gray-500">
-                  {' '}
-                  {new Date(description).toLocaleDateString(
-                    'id-ID',
-                    options,
-                  )}{' '}
-                </p>
+                <div className='flex items-center gap-2'>
+                  <p className="text-sm text-gray-500">
+                    {' '}
+                    {new Date(description).toLocaleDateString(
+                      'id-ID',
+                      options,
+                    )}{' '}
+                  </p>
+                  {startTime &&
+                    <p className='text-sm text-blue-600'>{startTime} - {endTime}</p>
+                  || null}
+                </div>
               </div>
             </div>
             <div>
-              <HiChevronRight size={24} />
+              {
+                isSuccess ?
+                <HiCheck className='text-green-600' size={24} />
+                : <HiChevronRight size={24} />
+              }
+              
             </div>
           </div>
         </div>

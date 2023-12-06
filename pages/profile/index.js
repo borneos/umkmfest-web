@@ -13,10 +13,13 @@ import useToast from '@/hooks/useToast';
 import { STATUS, STATUS_TOAST } from '@/constant/status';
 
 function Profile(props) {
-  const { query, cookies, dataUser } = props;
-  const tokenServer = query?.token;
+  const { cookies, dataUser } = props;
+  console.log("🚀 ~ file: index.js:17 ~ Profile ~ cookies:", cookies)
+  // const tokenServer = query?.token;
   const token = cookies?.borneos;
   const router = useRouter();
+  const { query } = router;
+  const [stateQuery, setStateQuery] = useState(query);
   const [data, setData] = useState(dataUser || {});
   const [dataHistoryEventTraining, setDataHistoryEventTraining] = useState();
 
@@ -24,15 +27,13 @@ function Profile(props) {
 
   const fetchDestroy = async () => {
     await Cookies.remove(token);
-    setTimeout(() => {
       router.push({
         pathname: `${ENV.URL_SSO}`,
         query: {
-          origin: `${ENV.URL}/profile`,
+          origin: `${ENV.URL}profile`,
         },
         asPath: `${ENV.URL_SSO}`
       });
-    }, 1000);
   };
 
   const fetchUser = async (clientCookie) => {
@@ -80,19 +81,13 @@ function Profile(props) {
 
   const fetchEventTraining = async  () => {
     await axios
-      .get(`${ENV.API}log-event-histories?category=training&sort=asc&telp=${data.telp}&email=${data.email}`)
+      .get(`${ENV.API}log-event-histories?category=training&sort=desc&email=${data.email}&telp=${data.telp}`)
       .then((response) => {
-        console.log("🚀 ~ file: index.js:86 ~ .then ~ response:", response)
-        // if (response.status === 200) {
-        //   setData(response.data.data);
-        // } else if (response.data.meta.statusCode !== STATUS.SUCCESS) {
-        //   fetchDestroy();
-        // } else {
-        //   fetchDestroy();
-        // }
+        if(response.status === STATUS.SUCCESS) {
+          setDataHistoryEventTraining(response.data.data)
+        } 
       })
       .catch((error) => {
-        // fetchDestroy();
         console.error(error, 'Login failed');
         return;
       });
@@ -103,15 +98,15 @@ function Profile(props) {
     // Check if any token cookies in client render
     const clientRenderCookie = Cookies.get(ENV.TOKEN_NAME);
     if (clientRenderCookie) {
-      fetchUser(clientRenderCookie);
+      // fetchUser(clientRenderCookie);
     } else {
       if (!dataUser) {
         router.push({
-          pathname: `${ENV.URL_SSO}/login`,
+          pathname: `${ENV.URL_SSO}login`,
           query: {
-            origin: `${ENV.URL}/profile`,
+            origin: `${ENV.URL}profile`,
           },
-          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/profile`
+          asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}profile`
         });
       }
     }
@@ -130,6 +125,12 @@ function Profile(props) {
       fetchEventTraining();
     }
   }, [data])
+
+  useEffect(() => {
+    if(query){
+      setStateQuery(query)
+    }
+  }, [query])
 
   return (
     <>
@@ -179,13 +180,18 @@ function Profile(props) {
             <p className="text-black font-semibold text-xl">
               History Pelatihan
             </p>
-            {/* <div className="flex flex-col gap-2">
-              <Card
-                type="trainings"
-                title="Pelatihan Menjahit"
-                description="Jumat, 8 Desember 2023"
-              />
-            </div> */}
+            <div className="flex flex-col gap-2">
+              {dataHistoryEventTraining?.map(item => 
+                <Card
+                  type="training"
+                  title={item.events[0].name}
+                  description={item.events[0].date}
+                  isSuccess
+                  startTime={item.events[0].start_time}
+                  endTime={item.events[0].end_time}
+                />
+              )}
+            </div>
             <div className="divider"></div>
           </div>
           <Button onClick={handleLogout} variant="secondary">Keluar</Button>

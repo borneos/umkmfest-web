@@ -20,11 +20,11 @@ export default function Games(props) {
     await Cookies.remove(token);
     setTimeout(() => {
       router.push({
-        pathname: `${ENV.URL_SSO}`,
+        pathname: ENV.URL_SSO,
         query: {
-          origin: `${ENV.URL}/games`
+          origin: `${ENV.URL}games`
         },
-        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/games`
+        asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}games`
       })
     }, 1000)
   }
@@ -57,11 +57,11 @@ export default function Games(props) {
     }else{
       if(!dataUser){
         router.push({
-          pathname: `${ENV.URL_SSO}/login`,
+          pathname: `${ENV.URL_SSO}login`,
           query: {
-            origin: `${ENV.URL}/games`
+            origin: `${ENV.URL}games`
           },
-          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/games`
+          asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}games`
         }) 
       }
     }

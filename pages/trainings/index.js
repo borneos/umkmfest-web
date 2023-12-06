@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { HiInformationCircle } from "react-icons/hi";
 import HeadMain from "@/components/HeadMain";
-const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1677317038/images/campign_o76pi8.jpg'
+const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1701798418/pktbeedufest/asset/umkm-fest-2023_cn7ddp.png'
 
 export default function Trainings(props) {
   const { query, cookies, dataUser } = props;
@@ -38,9 +38,9 @@ export default function Trainings(props) {
       router.push({
         pathname: `${ENV.URL_SSO}`,
         query: {
-          origin: `${ENV.URL}/trainings`,
+          origin: `${ENV.URL}trainings`,
         },
-        asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/trainings`
+        asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}trainings`
       });
     }, 1000);
   };
@@ -80,11 +80,11 @@ export default function Trainings(props) {
     } else {
       if (!dataUser) {
         router.push({
-          pathname: `${ENV.URL_SSO}/login`,
+          pathname: `${ENV.URL_SSO}login`,
           query: {
-            origin: `${ENV.URL}/trainings`
+            origin: `${ENV.URL}trainings`
           },
-          asPath: `${ENV.URL_SSO}/login?origin=${ENV.URL}/trainings`
+          asPath: `${ENV.URL_SSO}login?origin=${ENV.URL}trainings`
         }) 
       }
     }
@@ -108,8 +108,8 @@ export default function Trainings(props) {
         ogDescription="PKT UMKM Festival 2023."
         ogImageUrl={OG_IMAGE}
         ogImageAlt="Pelatihan- PKT UMKM Festival 2023"
-        ogImageType="image/jpg"
-        ogImageHeight="461"
+        ogImageType="image/png"
+        ogImageHeight="561"
         ogImageWidth="561"
         ogUrl="https://pktumkmfestival.com/trainings"
       />

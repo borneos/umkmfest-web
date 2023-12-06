@@ -2,7 +2,7 @@ import ENV from "@/constant/env";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { HiOutlineHome, HiOutlineUser } from "react-icons/hi";
+import { HiOutlineHome, HiOutlineUser, HiOutlineBookOpen } from "react-icons/hi";
 import { TbDeviceGamepad2 } from "react-icons/tb";
 
 export default function MenuBottom(props) {
@@ -22,6 +22,11 @@ export default function MenuBottom(props) {
       icon: <TbDeviceGamepad2 size={24} />
     },{
       id: 2,
+      name: "Training",
+      link: "/trainings",
+      icon: <HiOutlineBookOpen size={24} />
+    },{
+      id: 3,
       name: "Profile",
       link: "/profile",
       icon: <HiOutlineUser size={24} />

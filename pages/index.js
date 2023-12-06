@@ -13,7 +13,7 @@ import { pageview } from "@/public/gtag";
 import ENV from "@/constant/env";
 import { STATUS } from "@/constant/status";
 import HeadMain from "@/components/HeadMain";
-const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1677317038/images/campign_o76pi8.jpg'
+const OG_IMAGE = 'https://res.cloudinary.com/borneos-co/image/upload/v1701798418/pktbeedufest/asset/umkm-fest-2023_cn7ddp.png'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -66,10 +66,6 @@ export default function Home() {
     fetchBlog();
   }, []);
 
-  // useEffect(() => {
-  //   router.push('/countdown');
-  //   pageview(window.location.pathname);
-  // }, [router]);
   return (
     <>
       <HeadMain
@@ -80,8 +76,8 @@ export default function Home() {
         ogDescription="PKT UMKM Festival 2023."
         ogImageUrl={OG_IMAGE}
         ogImageAlt="PKT UMKM Festival 2023"
-        ogImageType="image/jpg"
-        ogImageHeight="461"
+        ogImageType="image/png"
+        ogImageHeight="561"
         ogImageWidth="561"
         ogUrl="https://pktumkmfestival.com"
       />
