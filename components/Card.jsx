@@ -16,6 +16,7 @@ export default function Card(props) {
     startTime,
     endTime,
     onClick,
+    complete,
   } = props;
 
   const dateEvent = new Date(description).getDate();
@@ -37,12 +38,14 @@ export default function Card(props) {
 
   return (
     <>
-      {type === 'history' ? (
+      {type === 'history' || complete ? (
         <div className="shadow-md rounded-md p-[15px] text-black border-[1px] border-gray-200">
           <div className="flex justify-between items-center gap-3">
             <div className="items-center">
               <p className="text-sm text-gray-400 font-light">
-                Anda telah terdaftar pada acara:
+                {complete
+                  ? 'Anda telah menyesaikan game : '
+                  : 'Anda telah terdaftar pada acara:'}
               </p>
               <p className="font-semibold text-sm"> {title ?? ''} </p>
               <div className="flex items-center gap-2">

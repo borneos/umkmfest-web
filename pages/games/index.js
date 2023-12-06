@@ -14,33 +14,33 @@ export default function Games(props) {
   const router = useRouter();
   const [dataGames, setDataGames] = useState();
   const [user, setUser] = useState();
-  console.log("🚀 ~ file: index.js:15 ~ Games ~ dataGames:", dataGames)
-  
+  console.log('🚀 ~ file: index.js:15 ~ Games ~ dataGames:', dataGames);
+
   const fetchGame = async () => {
     const telp = localStorage.getItem('userDataTelp');
     await axios
       .get(`${ENV.API}game-histories?sort=desc&telp=${telp}`)
       .then((response) => {
-        console.log("🚀 ~ file: index.js:23 ~ .then ~ response:", response)
-        if(response?.status === STATUS.SUCCESS) {
-          setDataGames(response?.data?.data)
-        } 
+        console.log('🚀 ~ file: index.js:23 ~ .then ~ response:', response);
+        if (response?.status === STATUS.SUCCESS) {
+          setDataGames(response?.data?.data);
+        }
       })
       .catch((error) => {
         console.warn(error, 'Login failed');
         return;
       });
-  }
+  };
 
   useEffect(() => {
     const name = localStorage.getItem('userDataName');
     const telp = localStorage.getItem('userDataTelp');
-    fetchGame()
+    fetchGame();
     setUser({
       name: name,
-      telp: telp
-    })
-  }, [])
+      telp: telp,
+    });
+  }, []);
 
   return (
     <>
@@ -50,25 +50,30 @@ export default function Games(props) {
           <div className="bg-orange-100 mt-2 rounded-xl flex gap-3 items-center text-black p-1">
             <HiInformationCircle size={18} color="#F2994A" />
             <p className="text-xs">
-              Halo <span className="font-bold">{user?.name || ''}</span>, yuk{" "}
-              <span className="font-bold"> Mulai Mission Games </span>{" "}
+              Halo <span className="font-bold">{user?.name || ''}</span>, yuk{' '}
+              <span className="font-bold"> Mulai Mission Games </span>{' '}
               PKTUMKMFEST 2023
             </p>
           </div>
-          {dataGames?.length > 0 ? dataGames?.map((item, id) => 
-            <div key={id}>
-              <Card
-                type="game"
-                title={`Mission Game ${item?.events[0].name}`}
-                description={item?.playDate}
-                link={item?.id}
-              />
+          {dataGames?.length > 0 ? (
+            dataGames?.map((item, id) => (
+              <div key={id}>
+                <Card
+                  type="game"
+                  title={`Mission Game ${item?.events[0].name}`}
+                  description={item?.playDate}
+                  link={item?.id}
+                  complete={item?.completeAt}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="p-2 text-center">
+              <span className="text-gray-300">
+                Anda belum memiliki history mission game
+              </span>
             </div>
-          ) :
-            <div className='p-2 text-center'>
-              <span className='text-gray-300'>Anda belum memiliki history mission game</span>
-            </div>
-          }
+          )}
         </div>
       </Layout>
     </>
@@ -87,4 +92,3 @@ Games.getInitialProps = async (props) => {
     };
   }
 };
-
